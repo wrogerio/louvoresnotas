@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row mb-2 g-2">
+    <div class="col-12 col-md-7">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome" formControlName="nome" />
+      </div>
+    </div>
+    <div class="col-12 col-md-5">
+      <div class="form-group">
+        <label for="cantor">Cantor</label>
+        <input type="text" class="form-control" id="cantor" formControlName="cantor" />
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="inicio">Início</label>
+        <textarea class="form-control" id="inicio" formControlName="inicio" maxlength="150" rows="2"></textarea>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="form-group">
+        <label for="tom">Tonalidade</label>
+        <input type="text" class="form-control" id="tom" formControlName="tom" maxlength="3" />
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="form-group">
+        <label for="formula">Fórmula</label>
+        <input type="text" class="form-control" id="formula" formControlName="formula" maxlength="4" />
+      </div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
+    <i class="fa-solid fa-floppy-disk me-2"></i>
+    Salvar
+  </button>
+  <a [routerLink]="['/']" class="btn btn-outline-success">
+    <i class="fa-solid fa-home me-2"></i>
+    Voltar
+  </a>
+</form>

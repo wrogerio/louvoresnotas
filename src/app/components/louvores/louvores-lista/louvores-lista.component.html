@@ -1,33 +1,43 @@
-<table class="table table-sm table-hover table-bordered table-responsive">
-  <tbody>
-    @for (item of listaLouvores; track $index) {
-    <tr>
-      <td class="px-2 py-1">
-        <section class="d-flex justify-content-between align-items-center bg-primary px-2 py-1 rounded-1 mb-1 text-white">
-          <span class="fw-bold">{{ item.nome }}</span>
-          <div>
-            <span class="btn btn-sm btn-outline-light me-3">
-              <i class="fa-solid fa-edit"></i>
-            </span>
-            <span class="btn btn-sm btn-outline-light me-3">
-              <i class="fa-solid fa-tv"></i>
-            </span>
-            <span class="btn btn-sm btn-outline-light">
-              <i class="fa-solid fa-trash"></i>
-            </span>
-          </div>
-        </section>
-        <section class="d-flex justify-content-between align-items-center">
-          <span class="fw-bold">{{ item.cantor }}</span>
-          <span class="fw-bold">
-            <span class="text-muted">{{ item.tom }} {{ item.formula }}</span>
-          </span>
-        </section>
-        <section class="d-flex justify-content-between align-items-center">
-          <span class="text-muted">{{ item.inicio }}</span>
-        </section>
-      </td>
-    </tr>
-    }
-  </tbody>
-</table>
+<div class="row mb-2">
+  <div class="col">
+    <section class="text-end mb-2">
+      <a class="btn btn-outline-primary btn-sm" [routerLink]="['/louvores/add']">
+        <i class="fa-solid fa-plus"></i>
+        Adicionar
+      </a>
+    </section>
+    <table class="table table-sm table-hover table-bordered table-responsive">
+      <tbody>
+        @for (item of listaLouvores; track $index) {
+        <tr>
+          <td class="px-2 py-1">
+            <section class="d-flex justify-content-between align-items-center bg-primary px-2 py-1 rounded-1 mb-1 text-white">
+              <span class="fw-bold">{{ item.nome }}</span>
+              <div>
+                <span class="btn btn-sm btn-outline-light me-3" [routerLink]="['/louvores/edit', item.id]">
+                  <i class="fa-solid fa-edit"></i>
+                </span>
+                <span class="btn btn-sm btn-outline-light me-3">
+                  <i class="fa-solid fa-tv"></i>
+                </span>
+                <span class="btn btn-sm btn-outline-light" (click)="removerLouvor(item.id)">
+                  <i class="fa-solid fa-trash"></i>
+                </span>
+              </div>
+            </section>
+            <section class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold">{{ item.cantor }}</span>
+              <span class="fw-bold">
+                <span class="text-muted">{{ item.tom }} {{ item.formula }}</span>
+              </span>
+            </section>
+            <section class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">{{ item.inicio }}</span>
+            </section>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LouvoresListaComponent } from './components/louvores/louvores-lista/louvores-lista.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LouvoresListaComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
