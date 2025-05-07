@@ -58,11 +58,11 @@
 <section If="letras.length > 0">
   <ul class="list-group mb-2">
     @for (letra of letras; track $index) {
-    <li class="list-group-item mb-2 shadow-sm p-2">
+    <li class="list-group-item mb-3 shadow-sm p-2">
       <div class="">
         <section class="d-flex justify-content-between align-items-center bg-white">
-          <span class="fw-bold">{{ letra.ordem }}</span>
-          <span class="fw-bold">{{ letra.is_intro | isIntro }}</span>
+          <span class="fw-bold text-danger" style="font-size: 1.23rem">{{ letra.ordem }}</span>
+          <span class="fw-bold text-danger" style="font-size: 1.23rem">{{ letra.is_intro | isIntro }}</span>
           <div>
             <span class="btn btn-sm btn-outline-primary me-3" [routerLink]="['/louvores', letra.louvor_id, 'letras', 'edit', letra.id]">
               <i class="fa-solid fa-edit"></i>
@@ -73,10 +73,10 @@
           </div>
         </section>
         <section class="bg-white">
-          <div class="mb-1 fw-medium">
+          <div class="mb-1 fw-medium" style="font-size: 1.2rem">
             {{ letra.letra }}
           </div>
-          <div class="fw-bold text-info" [innerHTML]="letra.notas | formataNotas"></div>
+          <div class="fw-bold text-primary fs-5" [innerHTML]="letra.notas | formataNotas"></div>
         </section>
       </div>
     </li>
