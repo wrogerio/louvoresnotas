@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-2">
+  <div class="row mb-2">
+    <h4 class="m-0 text-primary">Formulário de Edição</h4>
+  </div>
+  <div class="row mb-2 g-2">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="letra">Letra</label>
+        <textarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5"></textarea>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="notas">Notas</label>
+        <input type="text" class="form-control fw-medium" id="notas" formControlName="notas" />
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="ordem">Ordem</label>
+        <input type="number" class="form-control fw-medium" id="ordem" formControlName="ordem" />
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="is_intro">Introdução</label>
+        <select class="form-control form-select fw-medium" id="is_intro" formControlName="is_intro">
+          <option [ngValue]="false">Não</option>
+          <option [ngValue]="true">Sim</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
+    <i class="fa-solid fa-floppy-disk me-2"></i>
+    Salvar
+  </button>
+  <a [routerLink]="['/louvores', 'edit', louvor_id]" class="btn btn-outline-success">
+    <i class="fa-solid fa-home me-2"></i>
+    Voltar
+  </a>
+</form>

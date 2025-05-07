@@ -116,4 +116,75 @@ export class SupabaseService {
     const data = await response.json();
     return data as LetraModel[];
   }
+
+  async getLetraById(id: string): Promise<LetraModel> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?id=eq.${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao buscar letra');
+    }
+
+    const data = await response.json();
+    return data[0] as LetraModel;
+  }
+
+  async addLetra(letra: LetraModel): Promise<boolean> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+      body: JSON.stringify(letra),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    return true; // já será um LouvorModel
+  }
+
+  async updateLetra(letra: LetraModel): Promise<boolean> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?id=eq.${letra.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+      body: JSON.stringify(letra),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    return true; // já será um LouvorModel
+  }
+
+  async removerLetra(id: string): Promise<any> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    return true; // já será um LouvorModel
+  }
 }

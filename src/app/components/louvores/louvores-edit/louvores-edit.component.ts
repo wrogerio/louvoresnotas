@@ -96,4 +96,21 @@ export class LouvoresEditComponent {
       console.error('Error fetching letras:', error);
     }
   }
+
+  async deleteLetra(id: string) {
+    const confirmado = confirm('Tem certeza que deseja remover essa letra?');
+    if (confirmado) {
+      try {
+        const response = await this.supabaseService.removerLetra(id);
+        if (response) {
+          console.log('Letra deleted successfully:', response);
+          this.carregaLetras(); // Recarrega as letras após a exclusão
+        } else {
+          console.error('Error deleting letra:', response);
+        }
+      } catch (error) {
+        console.error('Error deleting letra:', error);
+      }
+    }
+  }
 }

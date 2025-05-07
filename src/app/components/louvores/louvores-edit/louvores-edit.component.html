@@ -48,7 +48,7 @@
   <section class="d-flex justify-content-between align-items-center">
     <h4 class="m-0 text-primary">Letra da canção</h4>
     <div>
-      <span class="btn btn-sm btn-outline-success">
+      <span class="btn btn-sm btn-outline-success" [routerLink]="['/louvores', id, 'letras', 'add']">
         <i class="fa-solid fa-plus"></i>
       </span>
     </div>
@@ -56,18 +56,18 @@
 </div>
 
 <section If="letras.length > 0">
-  <ul class="list-group list-group-flush mb-2">
+  <ul class="list-group mb-2">
     @for (letra of letras; track $index) {
-    <li class="list-group-item list-group-item-action mb-2 shadow-sm">
+    <li class="list-group-item mb-2 shadow-sm p-2">
       <div class="">
         <section class="d-flex justify-content-between align-items-center bg-white">
           <span class="fw-bold">{{ letra.ordem }}</span>
           <span class="fw-bold">{{ letra.is_intro | isIntro }}</span>
           <div>
-            <span class="btn btn-sm btn-outline-primary me-3">
+            <span class="btn btn-sm btn-outline-primary me-3" [routerLink]="['/louvores', letra.louvor_id, 'letras', 'edit', letra.id]">
               <i class="fa-solid fa-edit"></i>
             </span>
-            <span class="btn btn-sm btn-outline-danger">
+            <span class="btn btn-sm btn-outline-danger" (click)="deleteLetra(letra.id)">
               <i class="fa-solid fa-trash"></i>
             </span>
           </div>
