@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { LouvorModel } from '../interfaces/models';
+import { LetraModel, LouvorModel } from '../interfaces/models';
 
 @Injectable({
   providedIn: 'root',
@@ -97,5 +97,23 @@ export class SupabaseService {
     }
 
     return true; // já será um LouvorModel
+  }
+
+  async getLetrasByLouvorId(louvorId: string): Promise<LetraModel[]> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?louvor_id=eq.${louvorId}&order=ordem.asc`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao buscar letras');
+    }
+
+    const data = await response.json();
+    return data as LetraModel[];
   }
 }

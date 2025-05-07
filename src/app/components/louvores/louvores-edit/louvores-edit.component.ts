@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from '../../../services/supabase.service';
-import { LouvorModel } from '../../../interfaces/models';
+import { LetraModel, LouvorModel } from '../../../interfaces/models';
+import { IsIntroPipe } from '../../../pipes/is-intro.pipe';
+import { FormataNotasPipe } from '../../../pipes/formata-notas.pipe';
 
 @Component({
   selector: 'app-louvores-edit',
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule, IsIntroPipe, FormataNotasPipe],
   standalone: true,
   templateUrl: './louvores-edit.component.html',
   styleUrl: './louvores-edit.component.css',
@@ -14,6 +16,7 @@ import { LouvorModel } from '../../../interfaces/models';
 export class LouvoresEditComponent {
   id: string = '';
   form: FormGroup;
+  letras: LetraModel[] = [];
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -28,6 +31,7 @@ export class LouvoresEditComponent {
       this.id = params.get('id') ?? '';
       if (this.id) {
         this.carregaLouvor();
+        this.carregaLetras();
         console.log('ID recebido:', this.id);
       }
     });
@@ -76,6 +80,20 @@ export class LouvoresEditComponent {
       }
     } catch (error) {
       console.error('Error fetching louvor:', error);
+    }
+  }
+
+  async carregaLetras() {
+    try {
+      const letras = await this.supabaseService.getLetrasByLouvorId(this.id);
+      if (letras) {
+        console.log('Letras encontradas:', letras);
+        this.letras = letras;
+      } else {
+        console.error('Letras not found');
+      }
+    } catch (error) {
+      console.error('Error fetching letras:', error);
     }
   }
 }
