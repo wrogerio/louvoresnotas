@@ -1,16 +1,23 @@
 <div class="row mb-2" (click)="incrementa()">
-  <div class="col">
+  <div class="col-12 mb-2">
     @if(isEditing){
-    <section class="text-end mb-2">
+    <section class="text-end">
       <a class="btn btn-outline-primary btn-sm" [routerLink]="['/louvores/add']">
         <i class="fa-solid fa-plus"></i>
         Adicionar
       </a>
     </section>
     }
+  </div>
+
+  <div class="col-12">
+    <input type="text" class="form-control form-control-sm" placeholder="Pesquisar..." [(ngModel)]="filtro_search" (ngModelChange)="filtrar()" />
+  </div>
+
+  <div class="col-12">
     <table class="table table-sm table-hover table-bordered table-responsive mt-2">
       <tbody>
-        @for (item of listaLouvores; track $index) {
+        @for (item of listaLouvoresFiltrada; track $index) {
         <tr>
           <td class="px-2 py-1">
             <section class="d-flex justify-content-between align-items-center bg-primary px-2 py-1 rounded-1 mb-1 text-white">
