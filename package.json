@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "publicar": "ng build --configuration production --base-href /louvoresnotas/ && npx angular-cli-ghpages --dir=dist/louvores-notas"
   },
   "private": true,
   "dependencies": {
