@@ -3,7 +3,12 @@
     <div class="col-12">
       <div class="card mb-2">
         <div class="card-body">
-          <p class="">{{ item.letra }}</p>
+          <section class="d-flex justify-content-between align-items-center mb-2">
+            <span class="fw-bold text-primary">{{item.ordem}}</span>
+            <span class="fw-bold text-primary">{{item.is_intro | isIntro}}</span>
+          </section>
+          <p class="" style="font-weight: 500; font-size: 1.2rem;">{{ item.letra }}</p>
+          <p class="text-primary mb-0" style="font-size: 1.1rem; font-weight: 600;" [innerHTML]="item.notas | formataNotas"></p>
         </div>
       </div>
     </div>

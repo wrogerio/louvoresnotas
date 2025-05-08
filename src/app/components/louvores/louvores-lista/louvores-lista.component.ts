@@ -12,11 +12,21 @@ import { RouterModule } from '@angular/router';
 })
 export class LouvoresListaComponent {
   listaLouvores: LouvorModel[] = [];
+  isEditing: boolean = false;
+  contador: number = 0;
 
   constructor(private supabaseService: SupabaseService) {}
 
   ngOnInit() {
     this.carregarLouvores();
+  }
+
+  incrementa() {
+    this.contador++;
+
+    if(this.contador >= 5){
+      this.isEditing = true;
+    }
   }
 
   async carregarLouvores() {

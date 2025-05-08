@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase.service';
 import { LetraModel } from '../../../interfaces/models';
+import { IsIntroPipe } from '../../../pipes/is-intro.pipe';
+import { FormataNotasPipe } from '../../../pipes/formata-notas.pipe';
 
 @Component({
   selector: 'app-letras-cantar',
-  imports: [],
+  imports: [IsIntroPipe, FormataNotasPipe],
   templateUrl: './letras-cantar.component.html',
   styleUrl: './letras-cantar.component.css'
 })

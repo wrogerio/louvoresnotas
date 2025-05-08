@@ -17,6 +17,7 @@ export class LouvoresEditComponent {
   id: string = '';
   form: FormGroup;
   letras: LetraModel[] = [];
+  
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
