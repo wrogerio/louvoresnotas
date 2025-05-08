@@ -1,12 +1,14 @@
 <div class="row mb-2" (click)="incrementa()">
   <div class="col">
+    @if(isEditing){
     <section class="text-end mb-2">
       <a class="btn btn-outline-primary btn-sm" [routerLink]="['/louvores/add']">
         <i class="fa-solid fa-plus"></i>
         Adicionar
       </a>
     </section>
-    <table class="table table-sm table-hover table-bordered table-responsive">
+    }
+    <table class="table table-sm table-hover table-bordered table-responsive mt-2">
       <tbody>
         @for (item of listaLouvores; track $index) {
         <tr>
@@ -15,12 +17,12 @@
               <span class="fw-bold">{{ item.nome }}</span>
               <div>
                 @if(isEditing){
-                  <span class="btn btn-sm btn-outline-light me-3" [routerLink]="['/louvores/edit', item.id]">
-                    <i class="fa-solid fa-edit"></i>
-                  </span>
-                  <span class="btn btn-sm btn-outline-light me-3" (click)="removerLouvor(item.id)">
-                    <i class="fa-solid fa-trash"></i>
-                  </span>
+                <span class="btn btn-sm btn-outline-light me-3" [routerLink]="['/louvores/edit', item.id]">
+                  <i class="fa-solid fa-edit"></i>
+                </span>
+                <span class="btn btn-sm btn-outline-light me-3" (click)="removerLouvor(item.id)">
+                  <i class="fa-solid fa-trash"></i>
+                </span>
                 }
                 <span class="btn btn-sm btn-outline-light" [routerLink]="['/louvores/cantar', item.id]">
                   <i class="fa-solid fa-tv"></i>
