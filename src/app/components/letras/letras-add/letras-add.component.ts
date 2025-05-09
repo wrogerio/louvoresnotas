@@ -13,6 +13,7 @@ import { LetraModel, LouvorModel } from '../../../interfaces/models';
 export class LetrasAddComponent {
   louvor_id: string = '';
   form: FormGroup;
+  qtdLetras: number = 0;
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -25,6 +26,11 @@ export class LetrasAddComponent {
 
     this.route.paramMap.subscribe((params) => {
       this.louvor_id = params.get('louvor_id') ?? '';
+    });
+
+    this.supabaseService.getQtdLetrasByLouvorId(this.louvor_id).then((qtd) => {
+      this.qtdLetras = qtd;
+      this.form.patchValue({ ordem: this.qtdLetras + 1 });
     });
   }
 

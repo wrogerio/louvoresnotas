@@ -187,4 +187,22 @@ export class SupabaseService {
 
     return true; // já será um LouvorModel
   }
+
+  async getQtdLetrasByLouvorId(louvorId: string): Promise<number> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?louvor_id=eq.${louvorId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao buscar letras');
+    }
+
+    const data = await response.json();
+    return data.length;
+  }
 }
