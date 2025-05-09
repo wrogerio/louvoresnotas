@@ -37,7 +37,7 @@ export class LouvoresListaComponent {
   incrementa() {
     this.contador++;
 
-    if (this.contador >= 5) {
+    if (this.contador >= 20) {
       this.isEditing = true;
     }
   }
