@@ -20,14 +20,14 @@
     <div class="card mb-2">
       <div class="card-body pb-1">
         <section class="d-flex justify-content-between align-items-center mb-1">
-          <span class="fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="diminuirFonte()">{{ item.ordem }}</span>
-          <span class="fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="aumentarFonte()">{{ item.is_intro | isIntro }}</span>
+          <span class="no-select fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="diminuirFonte()">{{ item.ordem }}</span>
+          <span class="no-select fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="aumentarFonte()">{{ item.is_intro | isIntro }}</span>
         </section>
         <div style="text-align: justify; line-height: 1.5rem !important" class="mb-1">
-          <span class="m-0 mb-1" style="font-weight: 500; font-size: 1.3rem">{{ item.letra }}</span>
+          <span class="no-select m-0 mb-1" style="font-weight: 500; font-size: 1.3rem">{{ item.letra }}</span>
         </div>
         @if(mostrarNotas){
-        <p class="text-primary m-0 p-0" style="font-weight: 700" [ngStyle]="{ 'font-size': fontSize + 'em' }" [innerHTML]="item.notas | formataNotas"></p>
+        <p class="no-select text-primary m-0 p-0" style="font-weight: 700" [ngStyle]="{ 'font-size': fontSize + 'em' }" [innerHTML]="item.notas | formataNotas"></p>
         }
       </div>
     </div>

@@ -42,12 +42,12 @@ export class LetrasCantarComponent {
   }
 
   aumentarFonte() {
-    this.fontSize = parseFloat((this.fontSize + 0.15).toFixed(2));
+    this.fontSize = parseFloat((this.fontSize + 0.2).toFixed(2));
     localStorage.setItem('fontSizeLS', this.fontSize.toString());
   }
 
   diminuirFonte() {
-    this.fontSize = parseFloat((this.fontSize - 0.15).toFixed(2));
+    this.fontSize = parseFloat((this.fontSize - 0.2).toFixed(2));
     localStorage.setItem('fontSizeLS', this.fontSize.toString());
   }
 
