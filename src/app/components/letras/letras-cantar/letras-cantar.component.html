@@ -1,14 +1,16 @@
 <div class="row mb-2">
   <div class="col-12">
+    @if(mostrarNotas){
     <span class="btn btn-outline-primary" (click)="alteraMostrarNotas()">
-      @if(mostrarNotas){
       <i class="fa-solid fa-eye me-2"></i>
       <span>Exibindo notas</span>
-      } @else{
+    </span>
+    } @else{
+    <span class="btn btn-outline-danger" (click)="alteraMostrarNotas()">
       <i class="fa-solid fa-eye-slash me-2"></i>
       <span>Ocultando notas</span>
-      }
     </span>
+    }
   </div>
 </div>
 
