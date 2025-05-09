@@ -23,11 +23,11 @@
           <span class="fw-bold text-primary p-0 m-0" style="font-size: 1.2rem">{{ item.ordem }}</span>
           <span class="fw-bold text-primary p-0 m-0" style="font-size: 1.2rem">{{ item.is_intro | isIntro }}</span>
         </section>
-        <div style="text-align: justify; line-height: 1.35rem !important" class="mb-1">
-          <span class="m-0 mb-1" style="font-weight: 500; font-size: 1.2rem">{{ item.letra }}</span>
+        <div style="text-align: justify; line-height: 1.5rem !important" class="mb-1">
+          <span class="m-0 mb-1" style="font-weight: 500; font-size: 1.3rem">{{ item.letra }}</span>
         </div>
         @if(mostrarNotas){
-        <p class="text-primary m-0 p-0" style="font-size: 1.3rem; font-weight: 700" [innerHTML]="item.notas | formataNotas"></p>
+        <p class="text-primary m-0 p-0" style="font-size: 1.5rem; font-weight: 700; line-height: 1.7rem" [innerHTML]="item.notas | formataNotas"></p>
         }
       </div>
     </div>

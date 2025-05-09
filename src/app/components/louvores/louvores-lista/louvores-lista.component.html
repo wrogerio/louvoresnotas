@@ -19,8 +19,11 @@
       @for (item of listaLouvoresFiltrada; track $index) {
       <li class="list-group-item mb-2 shadow-sm p-2">
         <section class="d-flex justify-content-between align-items-center rounded-1">
-          <span class="fw-bold">{{ item.nome }}</span>
-          <div>
+          <div style="line-height: 1.4rem" class="m-0">
+            <span class="fw-bold d-block mb-0" style="font-size: 1.4rem">{{ item.nome }}</span>
+            <span class="fw-bold mt-0 mb-0" style="font-size: 0.9rem">{{ item.cantor }}</span>
+          </div>
+          <div class="m-0">
             @if(isEditing){
             <span class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/louvores/edit', item.id]">
               <i class="fa-solid fa-edit"></i>
@@ -38,13 +41,8 @@
             </span>
           </div>
         </section>
-        <section class="d-flex justify-content-between align-items-center">
-          <span class="fw-bold">{{ item.cantor }}</span>
-          <span class="fw-bold">
-            <span class="text-muted">{{ item.tom }} {{ item.formula }}</span>
-          </span>
-        </section>
-        <section class="d-flex justify-content-between align-items-center">
+
+        <section style="text-align: justify">
           <span class="text-muted">{{ item.inicio }}</span>
         </section>
       </li>

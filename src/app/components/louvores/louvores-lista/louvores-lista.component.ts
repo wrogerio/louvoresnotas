@@ -16,12 +16,30 @@ export class LouvoresListaComponent {
   listaLouvoresFiltrada: LouvorModel[] = [];
   isEditing: boolean = false;
   contador: number = 0;
+  limite: number = 0;
   filtro_search: string = '';
 
   constructor(private supabaseService: SupabaseService) {}
 
   ngOnInit() {
+    this.inicializarContadorLocalStorage();
     this.carregarLouvores();
+  }
+
+  inicializarContadorLocalStorage() {
+    const limiteLS = localStorage.getItem('limiteLouvores');
+
+    if (limiteLS === null) {
+      localStorage.setItem('limiteLouvores', '25');
+      this.limite = 15;
+    } else {
+      this.limite = parseInt(limiteLS, 10);
+    }
+
+    // Sempre reinicia o contador ao carregar a página
+    this.contador = 0;
+    localStorage.setItem('contadorLouvores', '0');
+    this.isEditing = false;
   }
 
   filtrar() {
@@ -36,8 +54,9 @@ export class LouvoresListaComponent {
 
   incrementa() {
     this.contador++;
+    localStorage.setItem('contadorLouvores', this.contador.toString());
 
-    if (this.contador >= 15) {
+    if (this.contador >= this.limite) {
       this.isEditing = true;
     }
   }
