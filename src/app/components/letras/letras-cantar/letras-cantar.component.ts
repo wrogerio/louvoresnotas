@@ -9,11 +9,12 @@ import { FormataNotasPipe } from '../../../pipes/formata-notas.pipe';
   selector: 'app-letras-cantar',
   imports: [IsIntroPipe, FormataNotasPipe],
   templateUrl: './letras-cantar.component.html',
-  styleUrl: './letras-cantar.component.css'
+  styleUrl: './letras-cantar.component.css',
 })
 export class LetrasCantarComponent {
   id: string = '';
   Letras: LetraModel[] = [];
+  mostrarNotas: boolean = true;
 
   constructor(private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.route.paramMap.subscribe((params) => {
@@ -23,7 +24,11 @@ export class LetrasCantarComponent {
         this.carregaLetra();
         console.log('ID recebido:', this.id);
       }
-    })
+    });
+  }
+
+  alteraMostrarNotas() {
+    this.mostrarNotas = !this.mostrarNotas;
   }
 
   async carregaLetra() {
@@ -32,7 +37,6 @@ export class LetrasCantarComponent {
       if (response) {
         this.Letras = response as LetraModel[];
         console.log('Letras carregadas:', this.Letras);
-        
       } else {
         console.error('Error loading letra:', response);
       }
