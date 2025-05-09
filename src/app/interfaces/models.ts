@@ -14,6 +14,7 @@ export interface LouvorModel {
   inicio: string;
   tom: string;
   formula: string;
+  url: string;
 }
 
 export interface LouvorComLetrasModel extends LouvorModel {

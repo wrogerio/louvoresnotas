@@ -21,6 +21,7 @@ export class LouvoresAddComponent {
       inicio: ['', Validators.required],
       tom: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       formula: ['', [Validators.required, Validators.minLength(3)]],
+      url: [''],
     });
   }
 
@@ -33,6 +34,7 @@ export class LouvoresAddComponent {
       data.inicio = data.inicio.trim();
       data.tom = data.tom.trim();
       data.formula = data.formula.trim();
+      data.url = data.url.trim();
 
       try {
         const response = await this.supabaseService.addLouvor(data);

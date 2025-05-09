@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-louvores-lista',
-  imports: [RouterModule, FormsModule ],
+  imports: [RouterModule, FormsModule],
   standalone: true,
   templateUrl: './louvores-lista.component.html',
   styleUrl: './louvores-lista.component.css',
@@ -31,18 +31,13 @@ export class LouvoresListaComponent {
       return;
     }
 
-    this.listaLouvoresFiltrada = this.listaLouvores.filter(louvor =>
-      louvor.nome.toLowerCase().includes(filtro) ||
-      louvor.cantor.toLowerCase().includes(filtro) ||
-      louvor.tom.toLowerCase().includes(filtro) ||
-      louvor.inicio.toLowerCase().includes(filtro)
-    );
+    this.listaLouvoresFiltrada = this.listaLouvores.filter((louvor) => louvor.nome.toLowerCase().includes(filtro) || louvor.cantor.toLowerCase().includes(filtro) || louvor.tom.toLowerCase().includes(filtro) || louvor.inicio.toLowerCase().includes(filtro) || louvor.url.toLowerCase().includes(filtro));
   }
 
   incrementa() {
     this.contador++;
 
-    if(this.contador >= 15){
+    if (this.contador >= 5) {
       this.isEditing = true;
     }
   }

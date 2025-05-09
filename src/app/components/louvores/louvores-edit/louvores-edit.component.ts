@@ -17,7 +17,6 @@ export class LouvoresEditComponent {
   id: string = '';
   form: FormGroup;
   letras: LetraModel[] = [];
-  
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -26,6 +25,7 @@ export class LouvoresEditComponent {
       inicio: ['', Validators.required],
       tom: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       formula: ['', [Validators.required, Validators.minLength(3)]],
+      url: [''],
     });
 
     this.route.paramMap.subscribe((params) => {
@@ -48,6 +48,7 @@ export class LouvoresEditComponent {
       data.inicio = data.inicio.trim();
       data.tom = data.tom.trim();
       data.formula = data.formula.trim();
+      data.url = data.url.trim();
 
       try {
         const response = await this.supabaseService.updateLouvor(data);
@@ -75,6 +76,7 @@ export class LouvoresEditComponent {
           inicio: louvor.inicio,
           tom: louvor.tom,
           formula: louvor.formula,
+          url: louvor.url,
         });
       } else {
         console.error('Louvor not found');
