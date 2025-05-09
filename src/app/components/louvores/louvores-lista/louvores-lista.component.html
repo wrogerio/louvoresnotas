@@ -14,14 +14,24 @@
     <input type="text" class="form-control form-control-sm" placeholder="Pesquisar..." [(ngModel)]="filtro_search" (ngModelChange)="filtrar()" />
   </div>
 
+  @if(qtdLouvores > 0){
+  <div class="row mb-2">
+    <div style="font-size: 1.1rem">
+      <span class="d-inline me-2">Foram encontrados</span>
+      <span class="d-inline fw-bold text-danger me-2">{{ qtdLouvores }}</span>
+      <span class="d-inline">louvores</span>
+    </div>
+  </div>
+  }
+
   <div class="col-12">
     <ul class="list-group">
       @for (item of listaLouvoresFiltrada; track $index) {
       <li class="list-group-item mb-2 shadow-sm p-2">
         <section class="d-flex justify-content-between align-items-center rounded-1">
           <div style="line-height: 1.4rem" class="m-0">
-            <span class="fw-bold d-block mb-0" style="font-size: 1.4rem">{{ item.nome }}</span>
-            <span class="fw-bold mt-0 mb-0" style="font-size: 0.9rem">{{ item.cantor }}</span>
+            <span class="fw-bold d-block mb-0" style="font-size: 1.3rem">{{ item.nome }}</span>
+            <span class="mt-0 mb-0" style="font-weight: 500; font-size: 1rem">{{ item.cantor }}</span>
           </div>
           <div class="m-0">
             @if(isEditing){

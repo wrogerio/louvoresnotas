@@ -18,6 +18,7 @@ export class LouvoresListaComponent {
   contador: number = 0;
   limite: number = 0;
   filtro_search: string = '';
+  qtdLouvores: number = 0;
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -46,10 +47,12 @@ export class LouvoresListaComponent {
     const filtro = this.filtro_search.trim().toLowerCase();
     if (!filtro) {
       this.listaLouvoresFiltrada = [...this.listaLouvores];
+      this.qtdLouvores = this.listaLouvores.length;
       return;
     }
 
     this.listaLouvoresFiltrada = this.listaLouvores.filter((louvor) => louvor.nome.toLowerCase().includes(filtro) || louvor.cantor.toLowerCase().includes(filtro) || louvor.tom.toLowerCase().includes(filtro) || louvor.inicio.toLowerCase().includes(filtro) || louvor.url.toLowerCase().includes(filtro));
+    this.qtdLouvores = this.listaLouvoresFiltrada.length;
   }
 
   incrementa() {
@@ -65,6 +68,7 @@ export class LouvoresListaComponent {
     try {
       this.listaLouvores = await this.supabaseService.getLouvoresLista();
       this.listaLouvoresFiltrada = [...this.listaLouvores];
+      this.qtdLouvores = this.listaLouvoresFiltrada.length;
     } catch (error) {
       console.error('Erro ao carregar louvores:', error);
     }
