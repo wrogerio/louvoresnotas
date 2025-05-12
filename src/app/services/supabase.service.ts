@@ -16,6 +16,8 @@ export class SupabaseService {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
         apikey: this.supabaseKey,
         Authorization: `Bearer ${this.supabaseKey}`,
       },
@@ -33,6 +35,8 @@ export class SupabaseService {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
         apikey: this.supabaseKey,
         Authorization: `Bearer ${this.supabaseKey}`,
       },
@@ -104,6 +108,8 @@ export class SupabaseService {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
         apikey: this.supabaseKey,
         Authorization: `Bearer ${this.supabaseKey}`,
       },
@@ -122,6 +128,8 @@ export class SupabaseService {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
         apikey: this.supabaseKey,
         Authorization: `Bearer ${this.supabaseKey}`,
       },
@@ -193,6 +201,8 @@ export class SupabaseService {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
         apikey: this.supabaseKey,
         Authorization: `Bearer ${this.supabaseKey}`,
       },
