@@ -95,7 +95,7 @@ export class LetrasEditComponent {
           const currentChar = content.charAt(cursorPos) || '';
           insercao = `{${currentChar}|${notaLimpa}}`;
         } else if (event.key === '-') {
-          insercao = `{.....|${notaLimpa}}`;
+          insercao = ` ...{.|${notaLimpa}}... `;
         }
 
         const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + (event.key === '+' && content.charAt(cursorPos) ? 1 : 0));
