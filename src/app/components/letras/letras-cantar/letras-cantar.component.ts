@@ -3,14 +3,13 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase.service';
 import { LetraModel } from '../../../interfaces/models';
-import { IsIntroPipe } from '../../../pipes/is-intro.pipe';
 import { CommonModule } from '@angular/common';
 import { FormataNotasPipe } from '../../../pipes/formata-notas.pipe';
 import { FormataNotasPipe2 } from '../../../pipes/formata-notas2.pipe';
 
 @Component({
   selector: 'app-letras-cantar',
-  imports: [IsIntroPipe, CommonModule, FormataNotasPipe, FormataNotasPipe2],
+  imports: [CommonModule, FormataNotasPipe, FormataNotasPipe2],
   templateUrl: './letras-cantar.component.html',
   styleUrls: ['./letras-cantar.component.css'],
 })
@@ -19,6 +18,10 @@ export class LetrasCantarComponent {
   Letras: LetraModel[] = [];
   Apresentacao: string[] = [];
   fontSize: number = 1;
+  scrollInterval: any;
+  scrollSpeed: number = 80; // intervalo entre os scrolls (em milissegundos)
+  scrollStep: number = 2; // quantos pixels sobem por passo
+  isScrolling: boolean = false;
 
   constructor(private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2, private cdr: ChangeDetectorRef) {
     this.route.paramMap.subscribe((params) => {
@@ -63,5 +66,44 @@ export class LetrasCantarComponent {
         console.error('Error loading letra:', response);
       }
     }
+  }
+
+  iniciarScroll() {
+    if (this.scrollInterval) return;
+    this.isScrolling = true;
+    this.scrollInterval = setInterval(() => {
+      window.scrollBy({ top: this.scrollStep, behavior: 'smooth' });
+    }, this.scrollSpeed);
+  }
+
+  pararScroll() {
+    this.isScrolling = false;
+    clearInterval(this.scrollInterval);
+    this.scrollInterval = null;
+  }
+
+  aumentarVelocidade() {
+    // Aumenta pixels por passo até um limite, e reduz o tempo até o mínimo
+    if (this.scrollSpeed > 10) this.scrollSpeed -= 5;
+    if (this.scrollStep < 10) this.scrollStep += 1;
+    this.reiniciarScroll();
+  }
+
+  diminuirVelocidade() {
+    // Reduz pixels por passo e aumenta o tempo entre passos
+    if (this.scrollSpeed < 200) this.scrollSpeed += 10;
+    if (this.scrollStep > 1) this.scrollStep -= 1;
+    this.reiniciarScroll();
+  }
+
+  reiniciarScroll() {
+    if (this.isScrolling) {
+      this.pararScroll();
+      this.iniciarScroll();
+    }
+  }
+
+  toggleScroll() {
+    this.isScrolling ? this.pararScroll() : this.iniciarScroll();
   }
 }

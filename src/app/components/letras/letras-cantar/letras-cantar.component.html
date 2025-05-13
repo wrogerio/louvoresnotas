@@ -2,10 +2,27 @@
   @for (item of Letras; track $index) {
   <div class="col-12">
     <div class="card mb-2">
-      <div class="card-body pb-1" (dblclick)="carregaLetra()">
-        <section class="d-flex justify-content-between align-items-center mb-1">
-          <span class="no-select fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="diminuirFonte()">{{ item.ordem }}</span>
-          <span class="no-select fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="aumentarFonte()">{{ item.is_intro | isIntro }}</span>
+      <div class="card-body pb-1">
+        <div class="d-flex justify-content-center gap-2 mb-3">
+          <button class="btn btn-success btn-sm" (click)="toggleScroll()">
+            {{ isScrolling ? "Parar Scroll" : "Iniciar Scroll" }}
+          </button>
+          <button class="btn btn-primary btn-sm" (click)="aumentarVelocidade()">+ Velocidade</button>
+          <button class="btn btn-warning btn-sm" (click)="diminuirVelocidade()">- Velocidade</button>
+        </div>
+        <section class="d-flex justify-content-between align-items-center mb-3">
+          <span class="no-select fw-bold text-black m-0 cursor" style="font-size: 1.2rem" (click)="diminuirFonte()">
+            {{ item.ordem }}
+          </span>
+          <span class="btn btn-sm btn-outline-primary" (click)="diminuirFonte()">
+            <img src="./images/circle_minus.png" alt="+" class="img-fluid" style="width: 1.1rem; height: 1.1rem cursor" />
+          </span>
+          <span class="btn btn-sm btn-outline-primary" (click)="carregaLetra()">
+            <img src="./images/bt_refresh.png" alt="+" class="img-fluid" style="width: 1.1rem; height: 1.1rem cursor" />
+          </span>
+          <span class="btn btn-sm btn-outline-primary" (click)="aumentarFonte()">
+            <img src="./images/circle_plus.png" alt="+" class="img-fluid" style="width: 1.1rem; height: 1.1rem cursor" />
+          </span>
         </section>
         <div style="text-align: justify; font-size: 1.8rem; font-weight: 500; line-height: 2.6rem" class="no-select mb-1" [innerHTML]="item.letra | formataNotas" [style.font-size]="fontSize + 'em'"></div>
         @if(item.notas.length > 0) {
