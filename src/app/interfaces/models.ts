@@ -13,7 +13,6 @@ export interface LouvorModel {
   cantor: string;
   inicio: string;
   tom: string;
-  formula: string;
   url: string;
 }
 

@@ -24,7 +24,6 @@ export class LouvoresEditComponent {
       cantor: ['', Validators.required],
       inicio: ['', Validators.required],
       tom: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
-      formula: ['', [Validators.required, Validators.minLength(3)]],
       url: [''],
     });
 
@@ -47,7 +46,6 @@ export class LouvoresEditComponent {
       data.cantor = data.cantor.trim();
       data.inicio = data.inicio.trim();
       data.tom = data.tom.trim();
-      data.formula = data.formula.trim();
       data.url = data.url.trim();
 
       try {
@@ -75,7 +73,6 @@ export class LouvoresEditComponent {
           cantor: louvor.cantor,
           inicio: louvor.inicio,
           tom: louvor.tom,
-          formula: louvor.formula,
           url: louvor.url,
         });
       } else {
