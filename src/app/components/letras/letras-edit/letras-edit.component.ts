@@ -81,37 +81,53 @@ export class LetrasEditComponent {
     const cursorPos = textarea.selectionStart;
     const content = textarea.value;
 
-    // Intercepta tecla + ou -
     if (event.key === '+' || event.key === '-' || event.key === '*') {
       event.preventDefault();
 
-      const nota = prompt('Digite a nota musical:');
+      let insercao = '';
+      let novaPosicaoCursor = cursorPos;
+      let ignorarProximoChar = 0;
 
-      if (nota !== null && nota.trim() !== '') {
-        let insercao = '';
-        const notaLimpa = nota.trim();
-
-        if (event.key === '+') {
+      if (event.key === '+') {
+        const nota = prompt('Digite a nota musical:');
+        if (nota !== null && nota.trim() !== '') {
           const currentChar = content.charAt(cursorPos) || '';
-          insercao = `{${currentChar}|${notaLimpa}}`;
-        } else if (event.key === '-') {
-          insercao = ` ...{.|${notaLimpa}}... `;
-        } else if (event.key === '*') {
-          insercao = `qq`;
+          insercao = `{${currentChar}|${nota.trim()}}`;
+          novaPosicaoCursor = cursorPos + insercao.length;
+          ignorarProximoChar = currentChar ? 1 : 0;
+        } else {
+          return;
         }
-
-        const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + (event.key === '+' && content.charAt(cursorPos) ? 1 : 0));
-
-        textarea.value = novoTexto;
-
-        // Atualiza o formControl, se estiver usando Reactive Forms
-        const formControlName = textarea.getAttribute('formControlName');
-        if (formControlName && this.form.get(formControlName)) {
-          this.form.get(formControlName)?.setValue(novoTexto);
+      } else if (event.key === '-') {
+        const nota = prompt('Digite a nota musical:');
+        if (nota !== null && nota.trim() !== '') {
+          insercao = ` ...{.|${nota.trim()}}... `;
+          novaPosicaoCursor = cursorPos + insercao.indexOf('}') + 1;
+        } else {
+          return;
         }
-
-        console.log('Texto atualizado:', novoTexto);
+      } else if (event.key === '*') {
+        insercao = 'qq';
+        novaPosicaoCursor = cursorPos + insercao.length;
       }
+
+      const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + ignorarProximoChar);
+
+      textarea.value = novoTexto;
+
+      // Atualiza formControl se necessário
+      const formControlName = textarea.getAttribute('formControlName');
+      if (formControlName && this.form.get(formControlName)) {
+        this.form.get(formControlName)?.setValue(novoTexto);
+      }
+
+      // Reposiciona o cursor
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
+        textarea.focus();
+      }, 0);
+
+      console.log('Texto atualizado:', novoTexto);
     }
   }
 }
