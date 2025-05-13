@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class QuebralinhaPipe implements PipeTransform {
   transform(value: string): string {
-    const resultado = value.replaceAll(' qq ', '<br>');
+    const resultado = value.replaceAll('qq', '<br>');
     return resultado;
   }
 }

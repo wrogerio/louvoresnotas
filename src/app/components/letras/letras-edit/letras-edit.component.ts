@@ -82,7 +82,7 @@ export class LetrasEditComponent {
     const content = textarea.value;
 
     // Intercepta tecla + ou -
-    if (event.key === '+' || event.key === '-') {
+    if (event.key === '+' || event.key === '-' || event.key === '*') {
       event.preventDefault();
 
       const nota = prompt('Digite a nota musical:');
@@ -96,6 +96,8 @@ export class LetrasEditComponent {
           insercao = `{${currentChar}|${notaLimpa}}`;
         } else if (event.key === '-') {
           insercao = ` ...{.|${notaLimpa}}... `;
+        } else if (event.key === '*') {
+          insercao = `qq`;
         }
 
         const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + (event.key === '+' && content.charAt(cursorPos) ? 1 : 0));
