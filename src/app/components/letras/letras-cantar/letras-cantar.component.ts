@@ -6,10 +6,11 @@ import { LetraModel } from '../../../interfaces/models';
 import { CommonModule } from '@angular/common';
 import { FormataNotasPipe } from '../../../pipes/formata-notas.pipe';
 import { FormataNotasPipe2 } from '../../../pipes/formata-notas2.pipe';
+import { QuebralinhaPipe } from '../../../pipes/quebralinha.pipe';
 
 @Component({
   selector: 'app-letras-cantar',
-  imports: [CommonModule, FormataNotasPipe, FormataNotasPipe2],
+  imports: [CommonModule, FormataNotasPipe, FormataNotasPipe2, QuebralinhaPipe],
   templateUrl: './letras-cantar.component.html',
   styleUrls: ['./letras-cantar.component.css'],
 })

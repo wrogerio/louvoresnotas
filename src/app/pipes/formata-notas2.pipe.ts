@@ -9,7 +9,6 @@ export class FormataNotasPipe2 implements PipeTransform {
 
   transform(texto: string): SafeHtml {
     const resultado = texto.replaceAll(',', ' | ').replaceAll('+', '<br>');
-
     return this.sanitizer.bypassSecurityTrustHtml(resultado);
   }
 }
