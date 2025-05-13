@@ -84,13 +84,13 @@ export class LetrasCantarComponent {
 
   aumentarVelocidade() {
     // Aumenta pixels por passo até um limite, e reduz o tempo até o mínimo
-    if (this.scrollSpeed > 10) this.scrollSpeed -= 50;
+    if (this.scrollSpeed > 70) this.scrollSpeed -= 70;
     this.reiniciarScroll();
   }
 
   diminuirVelocidade() {
     // Reduz pixels por passo e aumenta o tempo entre passos
-    if (this.scrollSpeed < 800) this.scrollSpeed += 50;
+    if (this.scrollSpeed < 900) this.scrollSpeed += 70;
     this.reiniciarScroll();
   }
 
