@@ -19,7 +19,7 @@ export class LetrasEditComponent {
     this.form = this.fb.group({
       ordem: [0, Validators.required],
       letra: ['', Validators.required],
-      notas: ['', Validators.required],
+      notas: [''],
       is_intro: [false],
       id: [''],
       louvor_id: [''],
@@ -52,7 +52,7 @@ export class LetrasEditComponent {
           return;
         }
 
-        this.router.navigate(['/louvores/edit', this.louvor_id]);
+        // this.router.navigate(['/louvores/edit', this.louvor_id]);
       } catch (error) {
         console.error('Error updating letra:', error);
       }
@@ -73,6 +73,42 @@ export class LetrasEditComponent {
         });
       } else {
         console.error('Error loading letra:', response);
+      }
+    }
+  }
+
+  onKeyDown(event: KeyboardEvent, textarea: HTMLTextAreaElement): void {
+    const cursorPos = textarea.selectionStart;
+    const content = textarea.value;
+
+    // Intercepta tecla + ou -
+    if (event.key === '+' || event.key === '-') {
+      event.preventDefault();
+
+      const nota = prompt('Digite a nota musical:');
+
+      if (nota !== null && nota.trim() !== '') {
+        let insercao = '';
+        const notaLimpa = nota.trim();
+
+        if (event.key === '+') {
+          const currentChar = content.charAt(cursorPos) || '';
+          insercao = `{${currentChar}|${notaLimpa}}`;
+        } else if (event.key === '-') {
+          insercao = `{.....|${notaLimpa}}`;
+        }
+
+        const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + (event.key === '+' && content.charAt(cursorPos) ? 1 : 0));
+
+        textarea.value = novoTexto;
+
+        // Atualiza o formControl, se estiver usando Reactive Forms
+        const formControlName = textarea.getAttribute('formControlName');
+        if (formControlName && this.form.get(formControlName)) {
+          this.form.get(formControlName)?.setValue(novoTexto);
+        }
+
+        console.log('Texto atualizado:', novoTexto);
       }
     }
   }

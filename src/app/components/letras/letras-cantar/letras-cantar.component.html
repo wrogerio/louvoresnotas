@@ -1,33 +1,17 @@
 <div class="row mb-2">
-  <div class="col-12">
-    @if(mostrarNotas){
-    <span class="btn btn-outline-primary" (click)="alteraMostrarNotas()">
-      <i class="fa-solid fa-eye me-2"></i>
-      <span>Exibindo notas</span>
-    </span>
-    } @else{
-    <span class="btn btn-outline-danger" (click)="alteraMostrarNotas()">
-      <i class="fa-solid fa-eye-slash me-2"></i>
-      <span>Ocultando notas</span>
-    </span>
-    }
-  </div>
-</div>
-
-<div class="row mb-2">
   @for (item of Letras; track $index) {
   <div class="col-12">
     <div class="card mb-2">
-      <div class="card-body pb-1">
+      <div class="card-body pb-1" (dblclick)="carregaLetra()">
         <section class="d-flex justify-content-between align-items-center mb-1">
           <span class="no-select fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="diminuirFonte()">{{ item.ordem }}</span>
           <span class="no-select fw-bold text-primary p-0 m-0" style="font-size: 1.2rem" (click)="aumentarFonte()">{{ item.is_intro | isIntro }}</span>
         </section>
-        <div style="text-align: justify; line-height: 1.5rem !important" class="mb-1">
-          <span class="no-select m-0 mb-1" style="font-weight: 500; font-size: 1.3rem">{{ item.letra }}</span>
+        <div style="text-align: justify; font-size: 1.8rem; font-weight: 500; line-height: 2.6rem" class="no-select mb-1" [innerHTML]="item.letra | formataNotas" [style.font-size]="fontSize + 'em'"></div>
+        @if(item.notas.length > 0) {
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <span class="no-select fw-bold text-primary p-0 m-0" [style.font-size]="fontSize + 'em'" [innerHTML]="item.notas | formataNotas2"></span>
         </div>
-        @if(mostrarNotas){
-        <p class="no-select text-primary m-0 p-0" style="font-weight: 700" [ngStyle]="{ 'font-size': fontSize + 'em' }" [innerHTML]="item.notas | formataNotas"></p>
         }
       </div>
     </div>

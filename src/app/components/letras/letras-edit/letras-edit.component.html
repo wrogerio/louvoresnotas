@@ -6,7 +6,7 @@
     <div class="col-12">
       <div class="form-group">
         <label for="letra">Letra</label>
-        <textarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5"></textarea>
+        <textarea #letraTextarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
       </div>
     </div>
     <div class="col-12">
