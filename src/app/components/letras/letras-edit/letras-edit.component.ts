@@ -101,7 +101,7 @@ export class LetrasEditComponent {
       } else if (event.key === '-') {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
-          insercao = ` ...{.|${nota.trim()}}... `;
+          insercao = ` ..{.|${nota.trim()}}.. `;
           novaPosicaoCursor = cursorPos + insercao.indexOf('}') + 1;
         } else {
           return;
