@@ -125,6 +125,8 @@ export class LetrasEditComponent {
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
         textarea.focus();
+
+        this.onSubmit();
       }, 0);
 
       console.log('Texto atualizado:', novoTexto);

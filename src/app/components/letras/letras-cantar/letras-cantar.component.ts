@@ -29,6 +29,11 @@ export class LetrasCantarComponent {
       this.id = params.get('id') ?? '';
 
       if (this.id) {
+        this.supabaseService.onLetraChanged(this.id, () => {
+          console.log('Letra foi alterada, recarregando...');
+          this.carregaLetra();
+        });
+
         this.carregaLetra();
         console.log('ID recebido:', this.id);
       }

@@ -30,6 +30,11 @@ export class LouvoresEditComponent {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id') ?? '';
       if (this.id) {
+        this.supabaseService.onLetraChanged(this.id, () => {
+          console.log('Letra foi alterada, recarregando...');
+          this.carregaLetras();
+        });
+
         this.carregaLouvor();
         this.carregaLetras();
         console.log('ID recebido:', this.id);
@@ -116,5 +121,9 @@ export class LouvoresEditComponent {
 
   getFullUrl(id: string): string {
     return `${window.location.origin}/louvoresnotas/louvores/cantar/${id}`;
+  }
+
+  async reordenar() {
+    await this.supabaseService.ReordenarLetras(this.id); // passando o id do louvor
   }
 }

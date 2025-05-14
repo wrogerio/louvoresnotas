@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { LetraModel, LouvorModel } from '../interfaces/models';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +9,11 @@ import { LetraModel, LouvorModel } from '../interfaces/models';
 export class SupabaseService {
   private supabaseUrl = environment.supabaseUrl;
   private supabaseKey = environment.supabaseKey;
+  private supabaseClient: SupabaseClient;
 
-  constructor() {}
+  constructor() {
+    this.supabaseClient = createClient(this.supabaseUrl, this.supabaseKey);
+  }
 
   async getLouvoresLista(): Promise<LouvorModel[]> {
     const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=*&order=cantor.asc,nome.asc`, {
@@ -214,5 +218,73 @@ export class SupabaseService {
 
     const data = await response.json();
     return data.length;
+  }
+
+  onLetraChanged(louvorId: string, callback: () => void) {
+    return this.supabaseClient
+      .channel('realtime-letras')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'TbLetras',
+          filter: `louvor_id=eq.${louvorId}`,
+        },
+        (payload) => {
+          console.log('Alteração detectada na letra:', payload);
+          callback();
+        }
+      )
+      .subscribe();
+  }
+
+  async ReordenarLetras(idLouvor: string): Promise<boolean> {
+    try {
+      // 1. Buscar todas as letras com o id do louvor, ordenadas pelo campo Ordem
+      const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?louvor_id=eq.${idLouvor}&order=ordem.asc`, {
+        method: 'GET',
+        headers: {
+          apikey: this.supabaseKey,
+          Authorization: `Bearer ${this.supabaseKey}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      debugger;
+      const letras = await response.json();
+
+      if (!Array.isArray(letras)) {
+        console.error('Erro ao buscar letras para reordenar:', letras);
+        return false;
+      }
+
+      // 2. Loop para reordenar (Ordem = 1, 2, 3, ...)
+      for (let i = 0; i < letras.length; i++) {
+        const letra = letras[i];
+        const novaOrdem = i + 1;
+
+        if (letra.ordem != novaOrdem) {
+          // Somente atualiza se estiver diferente
+          if (letra.ordem !== novaOrdem) {
+            const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?id=eq.${letra.id}`, {
+              method: 'PATCH',
+              headers: {
+                apikey: this.supabaseKey,
+                Authorization: `Bearer ${this.supabaseKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ ordem: novaOrdem }),
+            });
+          }
+        }
+      }
+      console.log('Reordenação concluída com sucesso.');
+      return true;
+    } catch (error) {
+      console.error('Erro ao reordenar letras:', error);
+    }
+
+    return false;
   }
 }
