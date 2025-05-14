@@ -8,22 +8,26 @@ export class FormataNotasPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
 
   transform(texto: string): SafeHtml {
-    const regex = /\{([^|]+)\|([^}]+)\}/g;
+    // Primeiro, dividimos por palavras (mantendo pontuação como parte)
+    const palavras = texto.split(/(\s+)/); // preserva os espaços entre as palavras
 
-    const resultado = texto.replace(regex, (match, letra, nota) => {
-      return `<span class="nota"><small class="nota-label">${nota}</small>${letra}</span>`;
+    const palavrasFormatadas = palavras.map((palavra) => {
+      // Verifica se a palavra contém alguma nota {letra|nota}
+      if (palavra.includes('{') && palavra.includes('}')) {
+        // Substitui todas as notas dentro da palavra
+        const formatada = palavra.replace(/\{([^|]+)\|([^}]+)\}/g, (match, letra, nota) => {
+          return `<span class="nota"><small class="nota-label">${nota}</small>${letra}</span>`;
+        });
+
+        // Envolve a palavra inteira com nowrap
+        return `<span style="white-space: nowrap;">${formatada}</span>`;
+      }
+
+      // Caso contrário, retorna a palavra normal
+      return palavra;
     });
 
-    return this.sanitizer.bypassSecurityTrustHtml(resultado);
-  }
-}
-
-export class FormataNotasPipe2 implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
-
-  transform(texto: string): SafeHtml {
-    const resultado = texto.replaceAll(',', '|');
-
+    const resultado = palavrasFormatadas.join('');
     return this.sanitizer.bypassSecurityTrustHtml(resultado);
   }
 }

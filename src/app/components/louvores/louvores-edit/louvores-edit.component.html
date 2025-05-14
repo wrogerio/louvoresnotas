@@ -1,6 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-2">
   <div class="row mb-2">
-    <h4 class="m-0 text-primary">Formulário de Edição</h4>
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="m-0 text-primary">Formulário de Edição</h4>
+        <span class="btn btn-sm btn-outline-primary" [routerLink]="['/louvores/cantar', id]">
+          <i class="fa-solid fa-tv"></i>
+        </span>
+      </div>
+    </div>
   </div>
   <div class="row mb-2 g-2">
     <div class="col-12 col-md-7">

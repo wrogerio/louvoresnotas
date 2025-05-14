@@ -34,3 +34,11 @@ body {
   transform: translateX(-50%);
   color: var(--bs-teal); /* Altere a cor da nota se necessário */
 }
+
+a {
+  text-decoration: none;
+}
+
+.palavra-nota {
+  white-space: nowrap;
+}

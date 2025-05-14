@@ -113,4 +113,8 @@ export class LouvoresEditComponent {
       }
     }
   }
+
+  getFullUrl(id: string): string {
+    return `${window.location.origin}/louvoresnotas/louvores/cantar/${id}`;
+  }
 }
