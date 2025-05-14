@@ -30,14 +30,8 @@ export class LouvoresEditComponent {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id') ?? '';
       if (this.id) {
-        this.supabaseService.onLetraChanged(this.id, () => {
-          console.log('Letra foi alterada, recarregando...');
-          this.carregaLetras();
-        });
-
         this.carregaLouvor();
         this.carregaLetras();
-        console.log('ID recebido:', this.id);
       }
     });
   }
@@ -45,7 +39,7 @@ export class LouvoresEditComponent {
   async onSubmit() {
     if (this.form.valid) {
       const data = this.form.value as LouvorModel;
-      data.id = this.id; // Adiciona o ID ao objeto de dados
+      data.id = this.id;
 
       data.nome = data.nome.trim();
       data.cantor = data.cantor.trim();
@@ -61,6 +55,10 @@ export class LouvoresEditComponent {
           return;
         }
 
+        // Atualiza as letras na tela após salvar
+        await this.carregaLetras();
+
+        // Se você quiser navegar, deixe essa linha
         this.router.navigate(['']);
       } catch (error) {
         console.error('Error updating louvor:', error);
@@ -72,7 +70,6 @@ export class LouvoresEditComponent {
     try {
       const louvor = await this.supabaseService.getLouvorById(this.id);
       if (louvor) {
-        console.log('Louvor encontrado:', louvor);
         this.form.patchValue({
           nome: louvor.nome,
           cantor: louvor.cantor,
@@ -92,10 +89,8 @@ export class LouvoresEditComponent {
     try {
       const letras = await this.supabaseService.getLetrasByLouvorId(this.id);
       if (letras) {
-        console.log('Letras encontradas:', letras);
         this.letras = letras;
       } else {
-        console.error('Letras not found');
       }
     } catch (error) {
       console.error('Error fetching letras:', error);
@@ -108,7 +103,6 @@ export class LouvoresEditComponent {
       try {
         const response = await this.supabaseService.removerLetra(id);
         if (response) {
-          console.log('Letra deleted successfully:', response);
           this.carregaLetras(); // Recarrega as letras após a exclusão
         } else {
           console.error('Error deleting letra:', response);

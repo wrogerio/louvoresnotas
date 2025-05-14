@@ -31,7 +31,6 @@ export class LetrasEditComponent {
 
       if (this.id) {
         this.carregaLetra();
-        console.log('ID recebido:', this.id);
       }
     });
   }
@@ -41,7 +40,7 @@ export class LetrasEditComponent {
       data.id = this.id;
       data.louvor_id = this.louvor_id;
 
-      data.letra = data.letra.trim();
+      data.letra = data.letra.trim().replace(/\n/g, ' ');
       data.notas = data.notas.trim();
 
       try {
@@ -52,7 +51,7 @@ export class LetrasEditComponent {
           return;
         }
 
-        // this.router.navigate(['/louvores/edit', this.louvor_id]);
+        this.carregaLetra();
       } catch (error) {
         console.error('Error updating letra:', error);
       }
@@ -128,8 +127,6 @@ export class LetrasEditComponent {
 
         this.onSubmit();
       }, 0);
-
-      console.log('Texto atualizado:', novoTexto);
     }
   }
 }

@@ -19,7 +19,7 @@ export class LetrasAddComponent {
     this.form = this.fb.group({
       ordem: [0, Validators.required],
       letra: ['', Validators.required],
-      notas: ['', Validators.required],
+      notas: [''],
       is_intro: [false],
       louvor_id: [''],
     });
@@ -38,7 +38,7 @@ export class LetrasAddComponent {
     const data = this.form.value as LetraModel;
     data.louvor_id = this.louvor_id;
 
-    data.letra = data.letra.trim();
+    data.letra = data.letra.trim().replace(/\n/g, ' ');
     data.notas = data.notas.trim();
 
     try {
@@ -52,6 +52,60 @@ export class LetrasAddComponent {
       this.router.navigate(['/louvores/edit', this.louvor_id]);
     } catch (error) {
       console.error('Error adding letra:', error);
+    }
+  }
+
+  onKeyDown(event: KeyboardEvent, textarea: HTMLTextAreaElement): void {
+    const cursorPos = textarea.selectionStart;
+    const content = textarea.value;
+
+    if (event.key === '+' || event.key === '-' || event.key === '*') {
+      event.preventDefault();
+
+      let insercao = '';
+      let novaPosicaoCursor = cursorPos;
+      let ignorarProximoChar = 0;
+
+      if (event.key === '+') {
+        const nota = prompt('Digite a nota musical:');
+        if (nota !== null && nota.trim() !== '') {
+          const currentChar = content.charAt(cursorPos) || '';
+          insercao = `{${currentChar}|${nota.trim()}}`;
+          novaPosicaoCursor = cursorPos + insercao.length;
+          ignorarProximoChar = currentChar ? 1 : 0;
+        } else {
+          return;
+        }
+      } else if (event.key === '-') {
+        const nota = prompt('Digite a nota musical:');
+        if (nota !== null && nota.trim() !== '') {
+          insercao = ` ..{.|${nota.trim()}}.. `;
+          novaPosicaoCursor = cursorPos + insercao.indexOf('}') + 1;
+        } else {
+          return;
+        }
+      } else if (event.key === '*') {
+        insercao = 'qq';
+        novaPosicaoCursor = cursorPos + insercao.length;
+      }
+
+      const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + ignorarProximoChar);
+
+      textarea.value = novoTexto;
+
+      // Atualiza formControl se necessário
+      const formControlName = textarea.getAttribute('formControlName');
+      if (formControlName && this.form.get(formControlName)) {
+        this.form.get(formControlName)?.setValue(novoTexto);
+      }
+
+      // Reposiciona o cursor
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
+        textarea.focus();
+
+        this.onSubmit();
+      }, 0);
     }
   }
 }

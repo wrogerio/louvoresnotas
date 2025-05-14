@@ -1,12 +1,12 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-2">
   <div class="row mb-2">
-    <h4 class="m-0 text-primary">Formulário de Edição</h4>
+    <h4 class="m-0 text-primary">Formulário de Criação</h4>
   </div>
   <div class="row mb-2 g-2">
     <div class="col-12">
       <div class="form-group">
         <label for="letra">Letra</label>
-        <textarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5"></textarea>
+        <textarea #letraTextarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
       </div>
     </div>
     <div class="col-12">

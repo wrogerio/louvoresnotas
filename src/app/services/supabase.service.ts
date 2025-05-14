@@ -232,7 +232,6 @@ export class SupabaseService {
           filter: `louvor_id=eq.${louvorId}`,
         },
         (payload) => {
-          console.log('Alteração detectada na letra:', payload);
           callback();
         }
       )
@@ -279,7 +278,6 @@ export class SupabaseService {
           }
         }
       }
-      console.log('Reordenação concluída com sucesso.');
       return true;
     } catch (error) {
       console.error('Erro ao reordenar letras:', error);
