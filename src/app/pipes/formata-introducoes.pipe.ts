@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Pipe({
-  name: 'formataNotas2',
+  name: 'formataIntro',
 })
-export class FormataNotasPipe2 implements PipeTransform {
+export class FormataIntroducoes implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
 
   transform(texto: string): SafeHtml {

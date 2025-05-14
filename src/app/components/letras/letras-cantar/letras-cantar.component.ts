@@ -5,16 +5,18 @@ import { SupabaseService } from '../../../services/supabase.service';
 import { LetraModel } from '../../../interfaces/models';
 import { CommonModule } from '@angular/common';
 import { FormataNotasPipe } from '../../../pipes/formata-notas.pipe';
-import { FormataNotasPipe2 } from '../../../pipes/formata-notas2.pipe';
 import { QuebralinhaPipe } from '../../../pipes/quebralinha.pipe';
+import { FormataIntroducoes } from '../../../pipes/formata-introducoes.pipe';
+import { LimpaNotasPipe } from '../../../pipes/limpa-notas.pipe';
 
 @Component({
   selector: 'app-letras-cantar',
-  imports: [CommonModule, FormataNotasPipe, FormataNotasPipe2, QuebralinhaPipe],
+  imports: [CommonModule, FormataNotasPipe, FormataIntroducoes, QuebralinhaPipe, LimpaNotasPipe],
   templateUrl: './letras-cantar.component.html',
   styleUrls: ['./letras-cantar.component.css'],
 })
 export class LetrasCantarComponent {
+  mostrarNotas: boolean = true;
   id: string = '';
   Letras: LetraModel[] = [];
   Apresentacao: string[] = [];
@@ -107,5 +109,9 @@ export class LetrasCantarComponent {
 
   toggleScroll() {
     this.isScrolling ? this.pararScroll() : this.iniciarScroll();
+  }
+
+  toggleMostrarNotas() {
+    this.mostrarNotas = !this.mostrarNotas;
   }
 }

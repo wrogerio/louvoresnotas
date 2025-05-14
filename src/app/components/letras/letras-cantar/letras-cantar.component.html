@@ -1,5 +1,18 @@
 <div class="row mb-2">
   <div class="col-12 col-md-8 col-lg-6 col-xl-4 mx-auto">
+    @if(mostrarNotas == true){
+    <span class="btn btn-outline-danger" (click)="toggleMostrarNotas()">
+      <span>Ocultar Notas</span>
+    </span>
+    } @else{
+    <span class="btn btn-outline-primary" (click)="toggleMostrarNotas()">
+      <span>Mostrar Notas</span>
+    </span>
+    }
+  </div>
+</div>
+<div class="row mb-2">
+  <div class="col-12 col-md-8 col-lg-6 col-xl-4 mx-auto">
     @for (item of Letras; track $index) {
     <div class="card mb-2">
       <div class="card-body p-3">
@@ -7,22 +20,31 @@
           <span class="no-select fw-bold text-black m-0 cursor" style="font-size: 1.2rem" (click)="diminuirFonte()">
             {{ item.ordem }}
           </span>
-          <button class="btn btn-outline-danger btn-sm" (click)="toggleScroll()">
-            {{ isScrolling ? "Stop" : "Start" }}
-          </button>
-          <button class="btn btn-outline-danger btn-sm" (click)="aumentarVelocidade()">+</button>
-          <button class="btn btn-outline-danger btn-sm" (click)="diminuirVelocidade()">-</button>
-          <span class="btn btn-sm btn-outline-primary" (click)="diminuirFonte()">
-            <img src="./images/circle_minus.png" alt="+" class="img-fluid" style="width: 1.1rem; height: 1.1rem cursor" />
-          </span>
-          <span class="btn btn-sm btn-outline-primary" (click)="aumentarFonte()">
-            <img src="./images/circle_plus.png" alt="+" class="img-fluid" style="width: 1.1rem; height: 1.1rem cursor" />
-          </span>
+          @if(mostrarNotas == true){
+          <section>
+            <button class="btn btn-outline-success btn-sm me-3" (click)="toggleScroll()">
+              {{ isScrolling ? "Stop" : "Start" }}
+            </button>
+            <button class="btn btn-outline-success btn-sm me-3" (click)="aumentarVelocidade()">+</button>
+            <button class="btn btn-outline-success btn-sm" (click)="diminuirVelocidade()">-</button>
+          </section>
+          }
+          <section>
+            <span class="btn btn-sm btn-outline-primary me-2" (click)="diminuirFonte()">
+              <img src="./images/circle_minus.png" alt="+" class="img-fluid" style="width: 1.1rem; height: 1.1rem cursor" />
+            </span>
+            <span class="btn btn-sm btn-outline-primary" (click)="aumentarFonte()">
+              <img src="./images/circle_plus.png" alt="+" class="img-fluid" style="width: 1.1rem; height: 1.1rem cursor" />
+            </span>
+          </section>
         </section>
+        @if(mostrarNotas == true){
         <div style="text-align: justify; font-size: 1.8rem; font-weight: 500; line-height: 2.6rem" class="no-select mb-1" [innerHTML]="item.letra | quebralinha | formataNotas" [style.font-size]="fontSize + 'em'"></div>
-        @if(item.notas.length > 0) {
+        } @else{
+        <div style="text-align: justify; font-size: 1.8rem; font-weight: 500; line-height: 2.6rem" class="no-select mb-1" [innerHTML]="item.letra | quebralinha | limpaNotas" [style.font-size]="fontSize + 'em'"></div>
+        } @if(item.notas.length > 0) {
         <div class="d-flex justify-content-between align-items-center mb-1">
-          <span class="no-select fw-bold text-primary p-0 m-0" [style.font-size]="fontSize + 'em'" [innerHTML]="item.notas | formataNotas2"></span>
+          <span class="no-select fw-bold text-primary p-0 m-0" [style.font-size]="fontSize + 'em'" [innerHTML]="item.notas | formataIntro"></span>
         </div>
         }
       </div>
