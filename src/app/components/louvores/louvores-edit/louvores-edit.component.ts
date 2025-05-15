@@ -123,7 +123,6 @@ export class LouvoresEditComponent {
 
   duplicar(id: string) {
     this.supabaseService.duplicarLetra(id).then((response) => {
-      debugger;
       if (response) {
         this.carregaLetras(); // Recarrega as letras após a duplicação
       } else {

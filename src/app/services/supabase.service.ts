@@ -250,7 +250,6 @@ export class SupabaseService {
         },
       });
 
-      debugger;
       const letras = await response.json();
 
       if (!Array.isArray(letras)) {
