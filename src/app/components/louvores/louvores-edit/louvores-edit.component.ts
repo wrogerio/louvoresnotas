@@ -120,4 +120,18 @@ export class LouvoresEditComponent {
   async reordenar() {
     await this.supabaseService.ReordenarLetras(this.id); // passando o id do louvor
   }
+
+  duplicar(id: string) {
+    const confirmado = confirm('Tem certeza que deseja duplicar essa letra?');
+    if (confirmado) {
+      this.supabaseService.duplicarLetra(id).then((response) => {
+        debugger;
+        if (response) {
+          this.carregaLetras(); // Recarrega as letras após a duplicação
+        } else {
+          console.error('Error duplicating letra:', response);
+        }
+      });
+    }
+  }
 }

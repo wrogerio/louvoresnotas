@@ -78,8 +78,13 @@
             <span class="btn btn-sm btn-outline-primary me-3" [routerLink]="['/louvores', letra.louvor_id, 'letras', 'edit', letra.id]">
               <i class="fa-solid fa-edit"></i>
             </span>
-            <span class="btn btn-sm btn-outline-danger" (click)="deleteLetra(letra.id)">
+            <span class="btn btn-sm btn-outline-danger me-3" (click)="deleteLetra(letra.id!)">
               <i class="fa-solid fa-trash"></i>
+            </span>
+            <span class="btn btn-sm btn-outline-success" (click)="duplicar(letra.id!)">
+              <!--Duplicar registro-->
+              <i class="fa-solid fa-copy"></i>
+              dsad
             </span>
           </div>
         </section>

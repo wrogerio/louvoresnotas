@@ -285,4 +285,34 @@ export class SupabaseService {
 
     return false;
   }
+
+  async duplicarLetra(idLetra: string): Promise<boolean> {
+    try {
+      // 1. Buscar a letra original
+      const letraOriginal = await this.getLetraById(idLetra);
+      if (!letraOriginal) {
+        console.error('Letra não encontrada');
+        return false;
+      }
+
+      // 2. Buscar todas as letras do mesmo louvor
+      const letrasDoLouvor = await this.getLetrasByLouvorId(letraOriginal.louvor_id);
+      const maiorOrdem = letrasDoLouvor.reduce((max, letra) => Math.max(max, letra.ordem), 0);
+
+      // 3. Criar nova letra (sem o id)
+      const novaLetra: LetraModel = {
+        ...letraOriginal,
+        ordem: maiorOrdem + 1,
+      };
+
+      delete novaLetra.id;
+
+      // 4. Inserir nova letra
+      const resultado = await this.addLetra(novaLetra);
+      return resultado;
+    } catch (error) {
+      console.error('Erro ao duplicar letra:', error);
+      return false;
+    }
+  }
 }

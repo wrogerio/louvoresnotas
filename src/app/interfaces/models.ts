@@ -1,5 +1,5 @@
 export interface LetraModel {
-  id: string;
+  id?: string;
   ordem: number;
   letra: string;
   notas: string;
