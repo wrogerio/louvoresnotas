@@ -38,7 +38,7 @@ export class LetrasAddComponent {
     const data = this.form.value as LetraModel;
     data.louvor_id = this.louvor_id;
 
-    data.letra = data.letra.trim().replace(/\n/g, ' ').replaceAll('  ', ' ');
+    data.letra = data.letra.trim().replace(/\n/g, ' ').replaceAll('', ' ');
     data.notas = data.notas.trim();
 
     try {
@@ -80,7 +80,8 @@ export class LetrasAddComponent {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
           insercao = ` ..{.|${nota.trim()}}.. `;
-          novaPosicaoCursor = cursorPos + insercao.indexOf('}') + 1;
+          const posRelativaFechamento = insercao.indexOf('}') + 2;
+          novaPosicaoCursor = cursorPos + posRelativaFechamento;
         } else {
           return;
         }
@@ -90,7 +91,6 @@ export class LetrasAddComponent {
       }
 
       const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + ignorarProximoChar);
-
       textarea.value = novoTexto;
 
       // Atualiza formControl se necessário
@@ -99,13 +99,13 @@ export class LetrasAddComponent {
         this.form.get(formControlName)?.setValue(novoTexto);
       }
 
-      // Reposiciona o cursor
+      // Reposiciona o cursor após a inserção
+      this.onSubmit();
+
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
         textarea.focus();
-
-        this.onSubmit();
-      }, 0);
+      }, 400);
     }
   }
 }
