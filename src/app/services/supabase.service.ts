@@ -12,7 +12,13 @@ export class SupabaseService {
   private supabaseClient: SupabaseClient;
 
   constructor() {
-    this.supabaseClient = createClient(this.supabaseUrl, this.supabaseKey);
+    this.supabaseClient = createClient(this.supabaseUrl, this.supabaseKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+        detectSessionInUrl: false,
+      },
+    });
   }
 
   async getLouvoresLista(): Promise<LouvorModel[]> {
