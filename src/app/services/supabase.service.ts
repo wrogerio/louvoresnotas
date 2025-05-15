@@ -231,7 +231,7 @@ export class SupabaseService {
           table: 'TbLetras',
           filter: `louvor_id=eq.${louvorId}`,
         },
-        (payload) => {
+        () => {
           callback();
         }
       )

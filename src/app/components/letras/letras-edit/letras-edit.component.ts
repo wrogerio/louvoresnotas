@@ -14,6 +14,7 @@ export class LetrasEditComponent {
   id: string = '';
   louvor_id: string = '';
   form: FormGroup;
+  ligar_atalhos: boolean = true;
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -76,7 +77,15 @@ export class LetrasEditComponent {
     }
   }
 
+  toogleLigarAtalhos() {
+    this.ligar_atalhos = !this.ligar_atalhos;
+  }
+
   onKeyDown(event: KeyboardEvent, textarea: HTMLTextAreaElement): void {
+    if (!this.ligar_atalhos) {
+      return;
+    }
+
     const cursorPos = textarea.selectionStart;
     const content = textarea.value;
 
@@ -107,8 +116,9 @@ export class LetrasEditComponent {
           return;
         }
       } else if (event.key === '*') {
-        insercao = 'qq';
-        novaPosicaoCursor = cursorPos + insercao.length;
+        const repeticoes = prompt('Quantas vezes vai repetir?');
+        insercao = ` qq <span class='fw-bold; text-danger'>(${repeticoes}X)</span>`;
+        novaPosicaoCursor = cursorPos + insercao.length + 15;
       }
 
       const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + ignorarProximoChar);
