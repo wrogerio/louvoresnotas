@@ -72,18 +72,18 @@
     <li class="list-group-item mb-3 shadow-sm p-2">
       <div class="">
         <section class="d-flex justify-content-between align-items-center bg-white">
-          <span class="fw-bold text-danger" style="font-size: 1.23rem">{{ letra.ordem }}</span>
-          <span class="fw-bold text-danger cursor" style="font-size: 1.23rem" (click)="toggleMostrarNotas()">{{ letra.is_intro | isIntro }}</span>
+          <span class="fw-bold text-black" style="font-size: 1.23rem">{{ letra.ordem }}</span>
+          <span class="fw-bold text-black cursor" style="font-size: 1.23rem" (click)="toggleMostrarNotas()">{{ letra.is_intro | isIntro }}</span>
           <div>
-            <span class="btn btn-sm btn-outline-primary me-3" [routerLink]="['/louvores', letra.louvor_id, 'letras', 'edit', letra.id]">
+            <span class="btn btn-sm btn-light me-3" [routerLink]="['/louvores', letra.louvor_id, 'letras', 'edit', letra.id]">
               <i class="fa-solid fa-edit"></i>
               Editar
             </span>
-            <span class="btn btn-sm btn-outline-danger me-3" (click)="deleteLetra(letra.id!)">
+            <span class="btn btn-sm btn-light me-3" (click)="deleteLetra(letra.id!)">
               <i class="fa-solid fa-trash"></i>
               Remover
             </span>
-            <span class="btn btn-sm btn-outline-success" (click)="duplicar(letra.id!)">
+            <span class="btn btn-sm btn-light" (click)="duplicar(letra.id!)">
               <!--Duplicar registro-->
               <i class="fa-solid fa-copy"></i>
               Duplicar
