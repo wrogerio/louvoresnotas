@@ -38,7 +38,7 @@ export class LetrasAddComponent {
     const data = this.form.value as LetraModel;
     data.louvor_id = this.louvor_id;
 
-    data.letra = data.letra.trim().replace(/\n/g, ' ').replaceAll('', ' ');
+    data.letra = data.letra.trim().replace(/\n/g, ' ').replaceAll('  ', ' ');
     data.notas = data.notas.trim();
 
     try {
