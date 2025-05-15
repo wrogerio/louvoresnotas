@@ -5,15 +5,17 @@ import { SupabaseService } from '../../../services/supabase.service';
 import { LetraModel, LouvorModel } from '../../../interfaces/models';
 import { IsIntroPipe } from '../../../pipes/is-intro.pipe';
 import { FormataNotasPipe } from '../../../pipes/formata-notas.pipe';
+import { QuebralinhaPipe } from '../../../pipes/quebralinha.pipe';
 
 @Component({
   selector: 'app-louvores-edit',
-  imports: [RouterModule, ReactiveFormsModule, IsIntroPipe, FormataNotasPipe],
+  imports: [RouterModule, ReactiveFormsModule, IsIntroPipe, FormataNotasPipe, QuebralinhaPipe],
   standalone: true,
   templateUrl: './louvores-edit.component.html',
   styleUrl: './louvores-edit.component.css',
 })
 export class LouvoresEditComponent {
+  mostrarNotas: boolean = false;
   id: string = '';
   form: FormGroup;
   letras: LetraModel[] = [];
@@ -129,5 +131,9 @@ export class LouvoresEditComponent {
         console.error('Error duplicating letra:', response);
       }
     });
+  }
+
+  toggleMostrarNotas() {
+    this.mostrarNotas = !this.mostrarNotas;
   }
 }

@@ -73,7 +73,7 @@
       <div class="">
         <section class="d-flex justify-content-between align-items-center bg-white">
           <span class="fw-bold text-danger" style="font-size: 1.23rem">{{ letra.ordem }}</span>
-          <span class="fw-bold text-danger" style="font-size: 1.23rem">{{ letra.is_intro | isIntro }}</span>
+          <span class="fw-bold text-danger cursor" style="font-size: 1.23rem" (click)="toggleMostrarNotas()">{{ letra.is_intro | isIntro }}</span>
           <div>
             <span class="btn btn-sm btn-outline-primary me-3" [routerLink]="['/louvores', letra.louvor_id, 'letras', 'edit', letra.id]">
               <i class="fa-solid fa-edit"></i>
@@ -90,10 +90,12 @@
             </span>
           </div>
         </section>
-        <section class="bg-white">
-          <div class="mb-1 fw-medium" style="font-size: 1.2rem">
-            {{ letra.letra }}
-          </div>
+        <section class="bg-white mt-4">
+          @if(mostrarNotas == true){
+          <div class="mb-1 fw-medium" style="font-size: 1.2rem" [innerHTML]="letra.letra | quebralinha | formataNotas"></div>
+          } @else {
+          <div class="mb-1 fw-medium" style="font-size: 1.2rem" [innerHTML]="letra.letra | quebralinha"></div>
+          }
           <div class="fw-bold text-primary fs-5" [innerHTML]="letra.notas | formataNotas"></div>
         </section>
       </div>
