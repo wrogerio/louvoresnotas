@@ -40,7 +40,7 @@ export class LetrasEditComponent {
       data.id = this.id;
       data.louvor_id = this.louvor_id;
 
-      data.letra = data.letra.trim().replace(/\n/g, ' ');
+      data.letra = data.letra.trim().replace(/\n/g, ' ').replaceAll('  ', ' ');
       data.notas = data.notas.trim();
 
       try {
@@ -86,6 +86,8 @@ export class LetrasEditComponent {
       let insercao = '';
       let novaPosicaoCursor = cursorPos;
       let ignorarProximoChar = 0;
+      let selecaoInicial = 0;
+      let selecaoFinal = 0;
 
       if (event.key === '+') {
         const nota = prompt('Digite a nota musical:');
@@ -94,6 +96,8 @@ export class LetrasEditComponent {
           insercao = `{${currentChar}|${nota.trim()}}`;
           novaPosicaoCursor = cursorPos + insercao.length;
           ignorarProximoChar = currentChar ? 1 : 0;
+          selecaoInicial = cursorPos + 1;
+          selecaoFinal = selecaoInicial + currentChar.length;
         } else {
           return;
         }
@@ -101,7 +105,9 @@ export class LetrasEditComponent {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
           insercao = ` ..{.|${nota.trim()}}.. `;
-          novaPosicaoCursor = cursorPos + insercao.indexOf('}') + 1;
+          const pontoPosicao = cursorPos + insercao.indexOf('.');
+          selecaoInicial = pontoPosicao;
+          selecaoFinal = pontoPosicao + 1;
         } else {
           return;
         }
@@ -111,20 +117,23 @@ export class LetrasEditComponent {
       }
 
       const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + ignorarProximoChar);
-
       textarea.value = novoTexto;
 
-      // Atualiza formControl se necessário
       const formControlName = textarea.getAttribute('formControlName');
       if (formControlName && this.form.get(formControlName)) {
         this.form.get(formControlName)?.setValue(novoTexto);
       }
 
-      // Reposiciona o cursor
+      // Reposiciona e/ou seleciona o cursor
       setTimeout(() => {
-        textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
-        textarea.focus();
+        if (event.key === '+' || event.key === '-') {
+          textarea.selectionStart = selecaoInicial;
+          textarea.selectionEnd = selecaoFinal;
+        } else {
+          textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
+        }
 
+        textarea.focus();
         this.onSubmit();
       }, 0);
     }
