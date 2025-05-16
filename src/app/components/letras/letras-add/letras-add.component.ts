@@ -14,6 +14,7 @@ export class LetrasAddComponent {
   louvor_id: string = '';
   form: FormGroup;
   qtdLetras: number = 0;
+  mostrar_controles: boolean = true;
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -32,6 +33,11 @@ export class LetrasAddComponent {
       this.qtdLetras = qtd;
       this.form.patchValue({ ordem: this.qtdLetras + 1 });
     });
+  }
+
+  toggoleMostrarControles() {
+    debugger;
+    this.mostrar_controles = !this.mostrar_controles;
   }
 
   async onSubmit() {

@@ -1,14 +1,19 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-2">
+  @if(mostrar_controles == true){
   <div class="row mb-2">
     <h4 class="m-0 text-primary">Formulário de Edição</h4>
   </div>
+  }
   <div class="row mb-2 g-2">
     <div class="col-12">
       <div class="form-group">
+        @if(mostrar_controles == true){
         <label for="letra">Letra</label>
-        <textarea #letraTextarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
+        }
+        <textarea (dblclick)="toggoleMostrarControles()" #letraTextarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
       </div>
     </div>
+    @if(mostrar_controles == true){
     <div class="col-12">
       <div class="form-group">
         <label for="notas">Notas</label>
@@ -30,11 +35,13 @@
         </select>
       </div>
     </div>
+    }
   </div>
   <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
     <i class="fa-solid fa-floppy-disk me-2"></i>
     Salvar
   </button>
+  @if(mostrar_controles == true){
   <a [routerLink]="['/louvores', 'edit', louvor_id]" class="btn btn-outline-success me-2">
     <i class="fa-solid fa-home me-2"></i>
     Voltar
@@ -44,4 +51,5 @@
     <i class="fa-solid fa-keyboard me-2"></i>
     Ligar Atalhos }
   </span>
+  }
 </form>

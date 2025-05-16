@@ -15,6 +15,7 @@ export class LetrasEditComponent {
   louvor_id: string = '';
   form: FormGroup;
   ligar_atalhos: boolean = true;
+  mostrar_controles: boolean = true;
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -79,6 +80,11 @@ export class LetrasEditComponent {
 
   toogleLigarAtalhos() {
     this.ligar_atalhos = !this.ligar_atalhos;
+  }
+
+  toggoleMostrarControles() {
+    debugger;
+    this.mostrar_controles = !this.mostrar_controles;
   }
 
   onKeyDown(event: KeyboardEvent, textarea: HTMLTextAreaElement): void {
