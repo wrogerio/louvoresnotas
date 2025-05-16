@@ -117,7 +117,7 @@ export class LetrasEditComponent {
         }
       } else if (event.key === '*') {
         const repeticoes = prompt('Quantas vezes vai repetir?');
-        insercao = ` qq <span class='fw-bold; text-danger'>(${repeticoes}X)</span>`;
+        insercao = ` qq <span class='fw-bold text-danger'>(${repeticoes}X)</span>`;
         novaPosicaoCursor = cursorPos + insercao.length + 15;
       }
 
