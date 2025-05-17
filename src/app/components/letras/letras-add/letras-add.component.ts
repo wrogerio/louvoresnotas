@@ -31,7 +31,14 @@ export class LetrasAddComponent {
 
     this.supabaseService.getQtdLetrasByLouvorId(this.louvor_id).then((qtd) => {
       this.qtdLetras = qtd;
-      this.form.patchValue({ ordem: this.qtdLetras + 1 });
+
+      if (qtd == 0) {
+        qtd = 1;
+        this.form.patchValue({ ordem: qtd, is_intro: true, letra: 'Introdução' });
+      } else {
+        qtd = qtd + 1;
+        this.form.patchValue({ ordem: qtd });
+      }
     });
   }
 

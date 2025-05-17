@@ -31,7 +31,7 @@ export class LouvoresListaComponent {
     const limiteLS = localStorage.getItem('limiteLouvores');
 
     if (limiteLS === null) {
-      localStorage.setItem('limiteLouvores', '5');
+      localStorage.setItem('limiteLouvores', '45');
       this.limite = 15;
     } else {
       this.limite = parseInt(limiteLS, 10);
