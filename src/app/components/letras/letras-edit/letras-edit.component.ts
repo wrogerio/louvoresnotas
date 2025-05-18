@@ -123,6 +123,9 @@ export class LetrasEditComponent {
         }
       } else if (event.key === '*') {
         const repeticoes = prompt('Quantas vezes vai repetir?');
+        if (repeticoes === null || repeticoes.trim() === '') {
+          return;
+        }
         insercao = ` qq <span class='fw-bold text-danger'>Repetir (${repeticoes}X)</span>`;
         novaPosicaoCursor = cursorPos + insercao.length + 15;
       }
