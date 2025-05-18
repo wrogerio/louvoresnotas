@@ -43,15 +43,27 @@ export class LouvoresListaComponent {
     this.isEditing = false;
   }
 
+  removerAcentos(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
   filtrar() {
-    const filtro = this.filtro_search.trim().toLowerCase();
+    // normaliza o filtro (minusculo + sem acentos)
+    const filtro = this.removerAcentos(this.filtro_search.trim().toLowerCase());
     if (!filtro) {
       this.listaLouvoresFiltrada = [...this.listaLouvores];
       this.qtdLouvores = this.listaLouvores.length;
       return;
     }
 
-    this.listaLouvoresFiltrada = this.listaLouvores.filter((louvor) => louvor.nome.toLowerCase().includes(filtro) || louvor.cantor.toLowerCase().includes(filtro) || louvor.tom.toLowerCase().includes(filtro) || louvor.inicio.toLowerCase().includes(filtro) || louvor.url.toLowerCase().includes(filtro));
+    this.listaLouvoresFiltrada = this.listaLouvores.filter((louvor) => {
+      // concatena todos os campos que quer buscar
+      const texto = [louvor.nome, louvor.cantor, louvor.tom, louvor.inicio, louvor.url].join(' ').toLowerCase();
+      // remove acentos
+      const textoSemAcento = this.removerAcentos(texto);
+      return textoSemAcento.includes(filtro);
+    });
+
     this.qtdLouvores = this.listaLouvoresFiltrada.length;
   }
 
