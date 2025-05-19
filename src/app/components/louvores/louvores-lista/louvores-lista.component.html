@@ -1,19 +1,24 @@
-<div class="row mb-2" (click)="incrementa()">
-  <div class="col-12 mb-2">
-    @if(isEditing){
-    <section class="text-end">
-      <a class="btn btn-outline-primary btn-sm" [routerLink]="['/louvores/add']">
-        <i class="fa-solid fa-plus"></i>
-        Adicionar
-      </a>
-    </section>
-    }
+<div (click)="incrementa()">
+  <div class="row mb-2">
+    <div class="col-12 mb-2">
+      @if(isEditing){
+      <section class="text-end">
+        <a class="btn btn-outline-primary btn-sm" [routerLink]="['/louvores/add']">
+          <i class="fa-solid fa-plus"></i>
+          Adicionar
+        </a>
+      </section>
+      }
+    </div>
   </div>
-
-  <div class="col-12 mb-2">
-    <input type="text" class="form-control form-control-sm" placeholder="Pesquisar..." [(ngModel)]="filtro_search" (ngModelChange)="filtrar()" />
+  <div class="row g-1 mb-2">
+    <div class="col-10">
+      <input type="text" class="form-control form-control-sm" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
+    </div>
+    <div class="col-2">
+      <span class="form-control btn btn-sm btn-primary" [(ngModel)]="filtro_search" (click)="filtrar()">Buscar</span>
+    </div>
   </div>
-
   @if(qtdLouvores > 0){
   <div class="row mb-2">
     <div style="font-size: 1.1rem">

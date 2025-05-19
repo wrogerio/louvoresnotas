@@ -47,24 +47,37 @@ export class LouvoresListaComponent {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
-  filtrar() {
-    // normaliza o filtro (minusculo + sem acentos)
-    const filtro = this.removerAcentos(this.filtro_search.trim().toLowerCase());
-    if (!filtro) {
+  async filtrar() {
+    const frase = this.filtro_search.trim();
+
+    if (!frase) {
+      // sem filtro: exibe tudo
       this.listaLouvoresFiltrada = [...this.listaLouvores];
-      this.qtdLouvores = this.listaLouvores.length;
+      this.qtdLouvores = this.listaLouvoresFiltrada.length;
       return;
     }
 
-    this.listaLouvoresFiltrada = this.listaLouvores.filter((louvor) => {
-      // concatena todos os campos que quer buscar
-      const texto = [louvor.nome, louvor.cantor, louvor.tom, louvor.inicio, louvor.url].join(' ').toLowerCase();
-      // remove acentos
-      const textoSemAcento = this.removerAcentos(texto);
-      return textoSemAcento.includes(filtro);
-    });
+    if (frase.length < 3) {
+      // se a frase tem menos de 3 caracteres, não faz nada
+      this.listaLouvoresFiltrada = [...this.listaLouvores];
+      this.qtdLouvores = this.listaLouvoresFiltrada.length;
+      return;
+    }
 
-    this.qtdLouvores = this.listaLouvoresFiltrada.length;
+    try {
+      // chama o método que busca no Supabase pelas letras
+      this.listaLouvoresFiltrada = await this.supabaseService.searchLouvoresByLyricSubstring(frase);
+
+      this.qtdLouvores = this.listaLouvoresFiltrada.length;
+    } catch (error) {
+      console.error('Erro na busca por letra:', error);
+      // opcional: fallback pra busca local por campos do louvor
+      this.listaLouvoresFiltrada = this.listaLouvores.filter((louvor) => {
+        const texto = [louvor.nome, louvor.cantor, louvor.tom, louvor.inicio, louvor.url].join(' ').toLowerCase();
+        return this.removerAcentos(texto).includes(this.removerAcentos(frase.toLowerCase()));
+      });
+      this.qtdLouvores = this.listaLouvoresFiltrada.length;
+    }
   }
 
   incrementa() {

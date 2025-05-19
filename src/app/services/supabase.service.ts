@@ -320,4 +320,42 @@ export class SupabaseService {
       return false;
     }
   }
+
+  private sanitizePhrase(raw: string): string {
+    // para garantir: minusculas e sem pontuação extra
+    return raw
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9 ]/g, '')
+      .trim();
+  }
+
+  async searchLouvoresByLyricSubstring(phrase: string): Promise<LouvorModel[]> {
+    const clean = this.sanitizePhrase(phrase);
+
+    // 1) Pega todos os louvor_id cujas letras normalizadas contenham a frase
+    const { data: letrasData, error: err1 } = await this.supabaseClient.from('TbLetras').select('louvor_id').ilike('letra_normalizada', `%${clean}%`);
+
+    if (err1) {
+      console.error('Erro buscando letras normalizadas:', err1);
+      throw err1;
+    }
+
+    // Cast para o formato certo
+    const letras = letrasData as Array<{ louvor_id: string }>;
+    const louvorIds = Array.from(new Set(letras.map((l) => l.louvor_id)));
+    if (louvorIds.length === 0) return [];
+
+    // 2) Busca os louvores pelos IDs
+    const { data: louvoresData, error: err2 } = await this.supabaseClient.from('TbLouvores').select('*').in('id', louvorIds).order('cantor', { ascending: true }).order('nome', { ascending: true });
+
+    if (err2) {
+      console.error('Erro buscando louvores:', err2);
+      throw err2;
+    }
+
+    // Cast final para LouvorModel[]
+    return (louvoresData as LouvorModel[]) ?? [];
+  }
 }

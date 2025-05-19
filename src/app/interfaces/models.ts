@@ -2,6 +2,7 @@ export interface LetraModel {
   id?: string;
   ordem: number;
   letra: string;
+  letra_normalizada: string;
   notas: string;
   is_intro: boolean;
   louvor_id: string;
