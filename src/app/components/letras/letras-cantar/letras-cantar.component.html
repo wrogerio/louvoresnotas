@@ -1,14 +1,11 @@
 <div class="row mb-2">
   <div class="col-12 col-md-8 col-lg-6 col-xl-4 mx-auto">
-    @if(mostrarNotas == true){
-    <span class="btn btn-outline-danger" (click)="toggleMostrarNotas()">
-      <span>Ocultar Notas</span>
-    </span>
-    } @else{
-    <span class="btn btn-outline-primary" (click)="toggleMostrarNotas()">
-      <span>Mostrar Notas</span>
-    </span>
-    }
+    <div class="d-flex justify-content-between align-items-center">
+      <section>
+        <span class="fw-bold text-primary me-2" style="font-size: 1.5rem">{{ nomeDoLouvor }} -</span>
+        <span class="fw-bold text-danger me-2" style="font-size: 1.5rem">{{ tomDoLouvor }}</span>
+      </section>
+    </div>
   </div>
 </div>
 <div class="row mb-2">

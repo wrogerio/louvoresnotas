@@ -22,9 +22,11 @@ export class LetrasCantarComponent {
   Apresentacao: string[] = [];
   fontSize: number = 1;
   scrollInterval: any;
-  scrollSpeed: number = 70; // intervalo entre os scrolls (em milissegundos)
+  scrollSpeed: number = 50; // intervalo entre os scrolls (em milissegundos)
   scrollStep: number = 1; // quantos pixels sobem por passo
   isScrolling: boolean = false;
+  nomeDoLouvor: string = '';
+  tomDoLouvor: string = '';
 
   constructor(private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2, private cdr: ChangeDetectorRef) {
     this.route.paramMap.subscribe((params) => {
@@ -68,6 +70,12 @@ export class LetrasCantarComponent {
       if (response) {
         this.Letras = response as LetraModel[];
         this.cdr.detectChanges();
+
+        const responseLouvor = await this.supabaseService.getLouvorById(this.id);
+        if (responseLouvor) {
+          this.nomeDoLouvor = responseLouvor.nome;
+          this.tomDoLouvor = responseLouvor.tom;
+        }
       } else {
         console.error('Error loading letra:', response);
       }
