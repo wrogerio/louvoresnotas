@@ -22,7 +22,7 @@ export class LetrasCantarComponent {
   Apresentacao: string[] = [];
   fontSize: number = 1;
   scrollInterval: any;
-  scrollSpeed: number = 120; // intervalo entre os scrolls (em milissegundos)
+  scrollSpeed: number = 70; // intervalo entre os scrolls (em milissegundos)
   scrollStep: number = 1; // quantos pixels sobem por passo
   isScrolling: boolean = false;
 

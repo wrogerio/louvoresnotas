@@ -23,16 +23,16 @@ body {
   position: relative;
   display: inline-block;
   font-weight: bold;
-  color: var(--bs-orange); /* Azul DodgerBlue */
+  color: var(--bs-blue); /* Azul DodgerBlue */
   cursor: default;
   user-select: none;
 }
 .nota .nota-label {
   position: absolute;
-  top: -1rem; /* Ajuste a distância conforme necessário */
+  top: -1.2rem; /* Ajuste a distância conforme necessário */
   left: 50%;
   transform: translateX(-50%);
-  color: var(--bs-teal); /* Altere a cor da nota se necessário */
+  color: var(--bs-blue); /* Altere a cor da nota se necessário */
 }
 
 a {
