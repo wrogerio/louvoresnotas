@@ -11,6 +11,7 @@ export interface LetraModel {
 export interface LouvorModel {
   id: string;
   nome: string;
+  grupo: string;
   cantor: string;
   inicio: string;
   tom: string;
