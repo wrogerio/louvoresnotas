@@ -19,6 +19,7 @@ export class LouvoresAddComponent {
       nome: ['', Validators.required],
       cantor: ['', Validators.required],
       inicio: ['', Validators.required],
+      grupo: ['', Validators.required],
       tom: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       url: [''],
     });
@@ -33,6 +34,7 @@ export class LouvoresAddComponent {
       data.inicio = data.inicio.trim();
       data.tom = data.tom.trim();
       data.url = data.url.trim();
+      data.grupo = data.grupo.trim();
 
       try {
         const response = await this.supabaseService.addLouvor(data);

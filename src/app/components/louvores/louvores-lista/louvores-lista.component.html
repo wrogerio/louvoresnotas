@@ -11,12 +11,35 @@
       }
     </div>
   </div>
-  <div class="row g-1 mb-2">
+
+  <div class="row mb-2">
+    <div class="col-12">
+      <select class="form-control" [(ngModel)]="modoFiltro">
+        <option value="texto">Filtrar por texto</option>
+        <option value="grupo">Filtrar por grupo</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row mb-2" *ngIf="modoFiltro === 'grupo'">
+    <div class="col-12">
+      <select name="filtroSelect" class="form-control fw-medium" [(ngModel)]="filtro_search" (change)="filtrar()">
+        <option value="">Selecione</option>
+        <option value="Circulo de Oracao">Círculo de Oração</option>
+        <option value="Jovens">Jovens</option>
+        <option value="Adolescentes">Adolescentes</option>
+        <option value="Crianças">Crianças</option>
+        <option value="Varões">Varões</option>
+        <option value="Outros">Outros</option>
+      </select>
+    </div>
+  </div>
+  <div class="row g-1 mb-2" *ngIf="modoFiltro === 'texto'">
     <div class="col-9">
-      <input type="text" class="form-control form-control-sm" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
+      <input type="text" class="form-control form-control" name="filtroInput" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
     </div>
     <div class="col-3">
-      <span class="form-control btn btn-sm btn-primary" [(ngModel)]="filtro_search" (click)="filtrar()">Buscar</span>
+      <button class="form-control btn btn-primary" (click)="filtrar()">Buscar</button>
     </div>
   </div>
   @if(qtdLouvores > 0){

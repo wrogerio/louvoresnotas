@@ -3,15 +3,17 @@ import { LouvorModel } from '../../../interfaces/models';
 import { SupabaseService } from '../../../services/supabase.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-louvores-lista',
-  imports: [RouterModule, FormsModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   standalone: true,
   templateUrl: './louvores-lista.component.html',
   styleUrl: './louvores-lista.component.css',
 })
 export class LouvoresListaComponent {
+  modoFiltro: 'grupo' | 'texto' = 'texto';
   listaLouvores: LouvorModel[] = [];
   listaLouvoresFiltrada: LouvorModel[] = [];
   isEditing: boolean = false;

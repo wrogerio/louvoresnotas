@@ -25,6 +25,7 @@ export class LouvoresEditComponent {
       nome: ['', Validators.required],
       cantor: ['', Validators.required],
       inicio: ['', Validators.required],
+      grupo: ['', Validators.required],
       tom: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       url: [''],
     });
@@ -48,6 +49,7 @@ export class LouvoresEditComponent {
       data.inicio = data.inicio.trim();
       data.tom = data.tom.trim();
       data.url = data.url.trim();
+      data.grupo = data.grupo.trim();
 
       try {
         const response = await this.supabaseService.updateLouvor(data);
@@ -78,6 +80,7 @@ export class LouvoresEditComponent {
           inicio: louvor.inicio,
           tom: louvor.tom,
           url: louvor.url,
+          grupo: louvor.grupo,
         });
       } else {
         console.error('Louvor not found');
