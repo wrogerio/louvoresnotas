@@ -335,7 +335,7 @@ export class SupabaseService {
     const clean = this.sanitizePhrase(phrase);
 
     // 1) Pega todos os louvor_id cujas letras normalizadas contenham a frase
-    const { data: letrasData, error: err1 } = await this.supabaseClient.from('vLouvores').select('id').ilike('letra_normalizada', `%${clean}%`);
+    const { data: letrasData, error: err1 } = await this.supabaseClient.from('vlouvores').select('louvor_id').ilike('letra_normalizada', `%${clean}%`);
 
     if (err1) {
       console.error('Erro buscando letras normalizadas:', err1);
@@ -343,8 +343,8 @@ export class SupabaseService {
     }
 
     // Cast para o formato certo
-    const letras = letrasData as Array<{ id: string }>;
-    const louvorIds = Array.from(new Set(letras.map((l) => l.id)));
+    const letras = letrasData as Array<{ louvor_id: string }>;
+    const louvorIds = Array.from(new Set(letras.map((l) => l.louvor_id)));
     if (louvorIds.length === 0) return [];
 
     // 2) Busca os louvores pelos IDs
