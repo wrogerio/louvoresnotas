@@ -57,12 +57,12 @@ export class LetrasAddComponent {
     try {
       const response = await this.supabaseService.addLetra(data);
 
-      if (!response) {
+      if (response == '') {
         console.error('Error adding letra:', response);
         return;
       }
-
-      this.router.navigate(['/louvores/edit', this.louvor_id]);
+      const letraId = response as string;
+      this.router.navigate(['/louvores', data.louvor_id, 'letras', 'edit', letraId]);
     } catch (error) {
       console.error('Error adding letra:', error);
     }

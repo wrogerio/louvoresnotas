@@ -153,22 +153,25 @@ export class SupabaseService {
     return data[0] as LetraModel;
   }
 
-  async addLetra(letra: LetraModel): Promise<boolean> {
+  async addLetra(letra: LetraModel): Promise<string> {
     const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         apikey: this.supabaseKey,
         Authorization: `Bearer ${this.supabaseKey}`,
+        Prefer: 'return=representation',
       },
       body: JSON.stringify(letra),
     });
 
     if (!response.ok) {
-      return false;
+      return '';
     }
 
-    return true; // já será um LouvorModel
+    const data = await response.json();
+
+    return data[0]?.id ?? '';
   }
 
   async updateLetra(letra: LetraModel): Promise<boolean> {
@@ -314,7 +317,7 @@ export class SupabaseService {
 
       // 4. Inserir nova letra
       const resultado = await this.addLetra(novaLetra);
-      return resultado;
+      return resultado !== '';
     } catch (error) {
       console.error('Erro ao duplicar letra:', error);
       return false;
