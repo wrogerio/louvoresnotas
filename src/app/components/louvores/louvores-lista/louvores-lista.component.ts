@@ -69,7 +69,6 @@ export class LouvoresListaComponent {
     try {
       // chama o método que busca no Supabase pelas letras
       this.listaLouvoresFiltrada = await this.supabaseService.searchLouvoresByLyricSubstring(frase);
-
       this.qtdLouvores = this.listaLouvoresFiltrada.length;
     } catch (error) {
       console.error('Erro na busca por letra:', error);

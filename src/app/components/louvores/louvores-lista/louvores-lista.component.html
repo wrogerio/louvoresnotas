@@ -14,15 +14,6 @@
 
   <div class="row mb-2">
     <div class="col-12">
-      <select class="form-control" [(ngModel)]="modoFiltro">
-        <option value="texto">Filtrar por texto</option>
-        <option value="grupo">Filtrar por grupo</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="row mb-2" *ngIf="modoFiltro === 'grupo'">
-    <div class="col-12">
       <select name="filtroSelect" class="form-control fw-medium" [(ngModel)]="filtro_search" (change)="filtrar()">
         <option value="">Selecione</option>
         <option value="Circulo de Oracao">Círculo de Oração</option>
