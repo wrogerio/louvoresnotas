@@ -26,12 +26,13 @@ body {
 .nota {
   position: relative;
   display: inline-block;
-  font-weight: bold;
-  color: var(--bs-blue); /* Azul DodgerBlue */
+  font-weight: 700;
+  color: var(--bs-black); /* Azul DodgerBlue */
   cursor: default;
   user-select: none;
 }
 .nota .nota-label {
+  font-size: 1.3rem; /* Ajuste o tamanho da fonte conforme necessário */
   position: absolute;
   top: -1.2rem; /* Ajuste a distância conforme necessário */
   left: 50%;

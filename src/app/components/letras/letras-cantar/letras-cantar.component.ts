@@ -22,7 +22,7 @@ export class LetrasCantarComponent {
   Apresentacao: string[] = [];
   fontSize: number = 1;
   scrollInterval: any;
-  scrollSpeed: number = 50; // intervalo entre os scrolls (em milissegundos)
+  scrollSpeed: number = 80; // intervalo entre os scrolls (em milissegundos)
   scrollStep: number = 1; // quantos pixels sobem por passo
   isScrolling: boolean = false;
   nomeDoLouvor: string = '';
@@ -98,13 +98,13 @@ export class LetrasCantarComponent {
 
   aumentarVelocidade() {
     // Aumenta pixels por passo até um limite, e reduz o tempo até o mínimo
-    if (this.scrollSpeed > 40) this.scrollSpeed -= 40;
+    if (this.scrollSpeed > 20) this.scrollSpeed -= 20;
     this.reiniciarScroll();
   }
 
   diminuirVelocidade() {
     // Reduz pixels por passo e aumenta o tempo entre passos
-    if (this.scrollSpeed < 900) this.scrollSpeed += 40;
+    if (this.scrollSpeed < 1200) this.scrollSpeed += 40;
     this.reiniciarScroll();
   }
 
