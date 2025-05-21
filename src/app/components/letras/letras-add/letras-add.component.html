@@ -37,12 +37,12 @@
     </div>
     }
   </div>
-  <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
+  <button accesskey="s" type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
     <i class="fa-solid fa-floppy-disk me-2"></i>
     Salvar
   </button>
   @if(mostrar_controles == true){
-  <a [routerLink]="['/louvores', 'edit', louvor_id]" class="btn btn-outline-success">
+  <a accesskey="v" [routerLink]="['/louvores', 'edit', louvor_id]" class="btn btn-outline-success">
     <i class="fa-solid fa-home me-2"></i>
     Voltar
   </a>

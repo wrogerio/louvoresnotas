@@ -53,15 +53,15 @@
       </div>
     </div>
   </div>
-  <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
+  <button accesskey="s" type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
     <i class="fa-solid fa-floppy-disk me-2"></i>
     Salvar
   </button>
-  <span class="btn btn-outline-primary me-2" (click)="reordenar()">
+  <span accesskey="r" class="btn btn-outline-primary me-2" (click)="reordenar()">
     <i class="fa-solid fa-arrows-rotate me-2"></i>
     Reordenar
   </span>
-  <a [routerLink]="['/']" class="btn btn-outline-success">
+  <a accesskey="v" [routerLink]="['/']" class="btn btn-outline-success">
     <i class="fa-solid fa-home me-2"></i>
     Voltar
   </a>
@@ -71,7 +71,7 @@
   <section class="d-flex justify-content-between align-items-center">
     <h4 class="m-0 text-primary">Letra da canção</h4>
     <div>
-      <span class="btn btn-sm btn-outline-success" [routerLink]="['/louvores', id, 'letras', 'add']">
+      <span accesskey="a" class="btn btn-sm btn-outline-success" [routerLink]="['/louvores', id, 'letras', 'add']">
         <i class="fa-solid fa-plus"></i>
       </span>
     </div>
