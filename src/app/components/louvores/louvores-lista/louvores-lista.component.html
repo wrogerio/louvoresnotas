@@ -13,15 +13,6 @@
   </div>
 
   <div class="row g-1 mb-2" *ngIf="modoFiltro === 'texto'">
-    <div class="col-12 col-md-4">
-      <select name="filtroSelect" class="form-control fw-medium" [(ngModel)]="filtro_search" (change)="filtrar()">
-        <option value="">Selecione</option>
-        <option value="Irmãs">Irmãs</option>
-        <option value="Jovens">Jovens</option>
-        <option value="Varões">Varões</option>
-        <option value="Outros">Outros</option>
-      </select>
-    </div>
     <div class="col-9 col-md-6">
       <input type="text" class="form-control form-control" name="filtroInput" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
     </div>
