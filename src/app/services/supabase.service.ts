@@ -22,7 +22,7 @@ export class SupabaseService {
   }
 
   async getLouvoresLista(): Promise<LouvorModel[]> {
-    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=*&order=created.desc&limit=30`, {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,url&order=created.desc&limit=90`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
