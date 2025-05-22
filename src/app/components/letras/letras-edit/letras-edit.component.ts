@@ -95,7 +95,7 @@ export class LetrasEditComponent {
     const cursorPos = textarea.selectionStart;
     const content = textarea.value;
 
-    if (event.key === '+' || event.key === '-' || event.key === '*') {
+    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
       event.preventDefault();
 
       let insercao = '';
@@ -128,6 +128,15 @@ export class LetrasEditComponent {
         }
         insercao = ` qq <span class='fw-bold text-danger'>Repetir (${repeticoes}X)</span>`;
         novaPosicaoCursor = cursorPos + insercao.length + 15;
+      } else if (event.key === '/') {
+        const nota = prompt('Digite a nota musical:');
+        if (nota !== null && nota.trim() !== '') {
+          insercao = ` | .....{.|${nota.trim()}}..... `;
+          const posRelativaFechamento = insercao.indexOf('}') + 6;
+          novaPosicaoCursor = cursorPos + posRelativaFechamento;
+        } else {
+          return;
+        }
       }
 
       const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + ignorarProximoChar);
