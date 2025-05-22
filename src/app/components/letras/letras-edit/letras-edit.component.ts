@@ -115,7 +115,7 @@ export class LetrasEditComponent {
       } else if (event.key === '-') {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
-          insercao = ` ..{.|${nota.trim()}}.. `;
+          insercao = ` ...{.|${nota.trim()}}... `;
           const posRelativaFechamento = insercao.indexOf('}') + 2;
           novaPosicaoCursor = cursorPos + posRelativaFechamento;
         } else {
@@ -131,7 +131,7 @@ export class LetrasEditComponent {
       } else if (event.key === '/') {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
-          insercao = ` | .....{.|${nota.trim()}}..... `;
+          insercao = ` | ...{.|${nota.trim()}}... `;
           const posRelativaFechamento = insercao.indexOf('}') + 6;
           novaPosicaoCursor = cursorPos + posRelativaFechamento;
         } else {
