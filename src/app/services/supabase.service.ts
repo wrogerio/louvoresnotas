@@ -22,7 +22,7 @@ export class SupabaseService {
   }
 
   async getLouvoresLista(): Promise<LouvorModel[]> {
-    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,url&order=created.desc&limit=90`, {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,conferido,url&order=created.desc&limit=90`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -360,5 +360,23 @@ export class SupabaseService {
 
     // Cast final para LouvorModel[]
     return (louvoresData as LouvorModel[]) ?? [];
+  }
+
+  async conferirLouvor(id: string, conferido: boolean): Promise<boolean> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+      body: JSON.stringify({ conferido }),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    return true;
   }
 }

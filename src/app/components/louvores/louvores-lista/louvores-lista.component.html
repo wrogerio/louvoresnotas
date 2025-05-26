@@ -36,7 +36,14 @@
       <li class="list-group-item mb-2 shadow-sm p-2">
         <section class="d-flex justify-content-between align-items-center rounded-1">
           <div style="line-height: 1.4rem" class="m-0">
-            <span class="text-primary d-block mb-0" style="font-size: 1.2rem; font-weight: 700">{{ item.nome }}</span>
+            <span class="text-primary d-block mb-0" style="font-size: 1.2rem; font-weight: 700">
+              {{ item.nome }}
+              @if(item.conferido == true){
+              <i class="fa-solid fa-check text-success fs-4"></i>
+              } @else {
+              <i class="fa-solid fa-xmark text-danger fs-4"></i>
+              }
+            </span>
             <span class="mt-0 mb-0" style="font-weight: 600; font-size: 1rem">{{ item.cantor }}</span>
           </div>
           <div class="m-0">

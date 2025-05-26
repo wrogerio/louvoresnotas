@@ -24,6 +24,7 @@ export class LetrasCantarComponent {
   tomOriginal: string = '';
   tomSelecionado: string = '';
   tomDoLouvor: string = '';
+  conferido: boolean = false;
 
   mostrarNotas: boolean = true;
 
@@ -73,6 +74,7 @@ export class LetrasCantarComponent {
           this.tomSelecionado = responseLouvor.tom;
           this.tomDoLouvor = responseLouvor.tom;
           this.tomSelecionado = this.tomOriginal;
+          this.conferido = responseLouvor.conferido;
         }
       } else {
         console.error('Erro ao carregar letra:', response);
@@ -115,6 +117,19 @@ export class LetrasCantarComponent {
       const novoAcorde = this.transporAcorde(acorde, semitons);
       return `{${silaba}|${novoAcorde}}`;
     });
+  }
+
+  conferir() {
+    if (this.id) {
+      this.supabaseService
+        .conferirLouvor(this.id, !this.conferido)
+        .then(() => {
+          this.conferido = !this.conferido;
+        })
+        .catch((error) => {
+          console.error('Erro ao conferir louvor:', error);
+        });
+    }
   }
 
   transporAcorde(acorde: string, semitons: number): string {
