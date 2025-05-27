@@ -21,8 +21,9 @@ export class SupabaseService {
     });
   }
 
-  async getLouvoresLista(): Promise<LouvorModel[]> {
-    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,conferido,url&order=created.desc&limit=90`, {
+  async getLouvoresLista(verConferidos: boolean): Promise<LouvorModel[]> {
+    const filtroConferido = verConferidos ? '' : '&conferido=eq.false';
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,conferido,url&order=created.desc&limit=90${filtroConferido}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

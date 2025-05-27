@@ -21,6 +21,7 @@ export class LouvoresListaComponent {
   limite: number = 0;
   filtro_search: string = '';
   qtdLouvores: number = 0;
+  verConferidos: boolean = false;
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -92,7 +93,7 @@ export class LouvoresListaComponent {
 
   async carregarLouvores() {
     try {
-      this.listaLouvores = await this.supabaseService.getLouvoresLista();
+      this.listaLouvores = await this.supabaseService.getLouvoresLista(this.verConferidos);
       this.listaLouvoresFiltrada = [...this.listaLouvores];
       this.qtdLouvores = this.listaLouvoresFiltrada.length;
     } catch (error) {
@@ -117,5 +118,11 @@ export class LouvoresListaComponent {
         console.error('Erro inesperado:', err);
       }
     }
+  }
+
+  async toggleConferido() {
+    this.verConferidos = !this.verConferidos;
+
+    await this.carregarLouvores();
   }
 }
