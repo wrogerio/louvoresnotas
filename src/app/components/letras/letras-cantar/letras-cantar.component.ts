@@ -35,7 +35,7 @@ export class LetrasCantarComponent {
 
   fontSize: number = 1;
   scrollInterval: any;
-  scrollSpeed: number = 60;
+  scrollSpeed: number = 90;
   scrollStep: number = 1;
   isScrolling: boolean = false;
 

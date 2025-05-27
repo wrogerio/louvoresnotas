@@ -1,8 +1,8 @@
-<div class="row mb-2">
-  <div class="col-12 mb-2">
+<div class="row mb-2 no-select">
+  <div class="col-12 mb-2 no-select">
     @if(isEditing){
-    <section class="text-end">
-      <a accesskey="a" class="btn btn-outline-primary btn-sm" [routerLink]="['/louvores/add']">
+    <section class="text-end no-select">
+      <a accesskey="a" class="btn btn-outline-primary btn-sm no-select" [routerLink]="['/louvores/add']">
         <i class="fa-solid fa-plus"></i>
         Adicionar
       </a>
@@ -11,17 +11,17 @@
   </div>
 </div>
 
-<div class="row g-1 mb-2" *ngIf="modoFiltro === 'texto'">
-  <div class="col-9 col-md-10">
-    <input type="text" class="form-control form-control" name="filtroInput" (dblclick)="toggleConferido()" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
+<div class="row g-1 mb-2 no-select" *ngIf="modoFiltro === 'texto'">
+  <div class="col-9 col-md-10 no-select">
+    <input type="text" class="form-control form-control no-select" name="filtroInput" (dblclick)="toggleConferido()" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
   </div>
-  <div class="col-3 col-md-2">
-    <button class="form-control btn btn-primary" (click)="filtrar()">Buscar</button>
+  <div class="col-3 col-md-2 no-select">
+    <button class="form-control btn btn-primary no-select" (click)="filtrar()">Buscar</button>
   </div>
 </div>
 @if(qtdLouvores > 0){
-<div class="row mb-2">
-  <div style="font-size: 1.1rem">
+<div class="row mb-2 no-select">
+  <div style="font-size: 1.1rem no-select">
     <span class="d-inline me-2">Foram encontrados</span>
     <span class="d-inline fw-bold text-danger me-2">{{ qtdLouvores }}</span>
     <span class="d-inline">louvores</span>
@@ -29,36 +29,36 @@
 </div>
 }
 
-<div class="col-12" (click)="incrementa()">
-  <ul class="list-group">
+<div class="col-12 no-select" (click)="incrementa()">
+  <ul class="list-group no-select">
     @for (item of listaLouvoresFiltrada; track $index) {
-    <li class="list-group-item mb-2 shadow-sm p-2">
-      <section class="d-flex justify-content-between align-items-center rounded-1">
-        <div style="line-height: 1.4rem" class="m-0">
-          <span class="text-primary d-block mb-0" style="font-size: 1.2rem; font-weight: 700">
+    <li class="list-group-item mb-2 shadow-sm p-2 no-select">
+      <section class="d-flex justify-content-between align-items-center rounded-1 no-select">
+        <div style="line-height: 1.4rem" class="m-0 no-select">
+          <span class="text-primary no-select d-block mb-0" style="font-size: 1.2rem; font-weight: 700">
             {{ item.nome }}
             @if(item.conferido == true){
-            <i class="fa-solid fa-check text-success fs-4"></i>
+            <i class="fa-solid fa-check text-success fs-4 no-select"></i>
             } @else {
-            <i class="fa-solid fa-xmark text-danger fs-4"></i>
+            <i class="fa-solid fa-xmark text-danger fs-4 no-select"></i>
             }
           </span>
-          <span class="mt-0 mb-0" style="font-weight: 600; font-size: 1rem">{{ item.cantor }}</span>
+          <span class="mt-0 mb-0 no-select" style="font-weight: 600; font-size: 1rem">{{ item.cantor }}</span>
         </div>
         <div class="m-0">
           @if(isEditing){
-          <span class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/louvores/edit', item.id]">
+          <span class="btn btn-sm btn-outline-primary me-2 no-select" [routerLink]="['/louvores/edit', item.id]">
             <i class="fa-solid fa-edit"></i>
           </span>
-          <span class="btn btn-sm btn-outline-primary me-2" (click)="removerLouvor(item.id)">
+          <span class="btn btn-sm btn-outline-primary me-2 no-select" (click)="removerLouvor(item.id)">
             <i class="fa-solid fa-trash"></i>
           </span>
           } @if(item.url){
-          <a class="btn btn-sm btn-outline-danger me-2" href="{{ item.url }}" target="_blank">
+          <a class="btn btn-sm btn-outline-danger me-2 no-select" href="{{ item.url }}" target="_blank">
             <i class="fa-brands fa-youtube"></i>
           </a>
           }
-          <span class="btn btn-sm btn-outline-primary" [routerLink]="['/louvores/cantar', item.id]">
+          <span class="btn btn-sm btn-outline-primary no-select" [routerLink]="['/louvores/cantar', item.id]">
             <i class="fa-solid fa-tv"></i>
           </span>
         </div>
