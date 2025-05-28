@@ -43,7 +43,6 @@ export class LetrasAddComponent {
   }
 
   toggoleMostrarControles() {
-    debugger;
     this.mostrar_controles = !this.mostrar_controles;
   }
 

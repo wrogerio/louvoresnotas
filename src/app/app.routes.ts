@@ -5,6 +5,7 @@ import { LouvoresEditComponent } from './components/louvores/louvores-edit/louvo
 import { LetrasEditComponent } from './components/letras/letras-edit/letras-edit.component';
 import { LetrasAddComponent } from './components/letras/letras-add/letras-add.component';
 import { LetrasCantarComponent } from './components/letras/letras-cantar/letras-cantar.component';
+import { LetrasAddAllComponent } from './components/letras/letras-add-all/letras-add-all.component';
 
 export const routes: Routes = [
   { path: '', component: LouvoresListaComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'louvores/edit/:id', component: LouvoresEditComponent },
   { path: 'louvores/:louvor_id/letras/edit/:id', component: LetrasEditComponent },
   { path: 'louvores/:louvor_id/letras/add', component: LetrasAddComponent },
-  { path: 'louvores/cantar/:id', component: LetrasCantarComponent}, // Assuming you want to show the list of letras for a louvor
-  { path: '**', redirectTo: '' } // Redirect to home for any unknown routes
+  { path: 'louvores/:louvor_id/letras/add-all', component: LetrasAddAllComponent },
+  { path: 'louvores/cantar/:id', component: LetrasCantarComponent },
+  { path: '**', redirectTo: '' },
 ];

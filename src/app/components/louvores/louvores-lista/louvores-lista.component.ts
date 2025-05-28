@@ -21,7 +21,7 @@ export class LouvoresListaComponent {
   limite: number = 0;
   filtro_search: string = '';
   qtdLouvores: number = 0;
-  verConferidos: boolean = false;
+  verConferidos: boolean = true;
 
   constructor(private supabaseService: SupabaseService) {}
 

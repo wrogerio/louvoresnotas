@@ -116,7 +116,7 @@ export class LetrasEditComponent {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
           insercao = ` ...{.|${nota.trim()}}... `;
-          const posRelativaFechamento = insercao.indexOf('}') + 2;
+          const posRelativaFechamento = insercao.indexOf('}') + 5;
           novaPosicaoCursor = cursorPos + posRelativaFechamento;
         } else {
           return;

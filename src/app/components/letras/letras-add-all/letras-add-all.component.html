@@ -1,0 +1,21 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-2">
+  <div class="row mb-2">
+    <h4 class="m-0 text-danger">Formulário de Criação - All</h4>
+  </div>
+  <div class="row mb-2 g-2">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="letra">Letra</label>
+        <textarea #letraTextarea type="text" class="form-control fw-medium" id="letra" (dblclick)="LimparLetra()" formControlName="letra" rows="25"></textarea>
+      </div>
+    </div>
+  </div>
+  <button accesskey="s" type="submit" [disabled]="form.invalid" class="btn btn-outline-primary me-2">
+    <i class="fa-solid fa-floppy-disk me-2"></i>
+    Salvar
+  </button>
+  <a accesskey="v" [routerLink]="['/louvores', 'edit', louvor_id]" class="btn btn-outline-success">
+    <i class="fa-solid fa-home me-2"></i>
+    Voltar
+  </a>
+</form>
