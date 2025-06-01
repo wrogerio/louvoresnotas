@@ -13,7 +13,7 @@
 
 <div class="row g-1 mb-2 no-select" *ngIf="modoFiltro === 'texto'">
   <div class="col-9 col-md-10 no-select">
-    <input type="text" class="form-control form-control no-select" name="filtroInput" (dblclick)="toggleConferido()" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
+    <input type="text" class="form-control form-control no-select" autofocus name="filtroInput" (dblclick)="toggleConferido()" placeholder="Pesquisar..." [(ngModel)]="filtro_search" />
   </div>
   <div class="col-3 col-md-2 no-select">
     <button class="form-control btn btn-primary no-select" (click)="filtrar()">Buscar</button>

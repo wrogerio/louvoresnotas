@@ -35,7 +35,7 @@ export class LetrasCantarComponent {
 
   fontSize: number = 1;
   scrollInterval: any;
-  scrollSpeed: number = 90;
+  scrollSpeed: number = 70;
   scrollStep: number = 1;
   isScrolling: boolean = false;
 
@@ -55,7 +55,7 @@ export class LetrasCantarComponent {
     });
 
     const savedFontSize = localStorage.getItem('fontSizeLS');
-    this.fontSize = savedFontSize ? parseFloat(savedFontSize) : 1.4;
+    this.fontSize = savedFontSize ? parseFloat(savedFontSize) : 1.5;
     localStorage.setItem('fontSizeLS', this.fontSize.toString());
   }
 

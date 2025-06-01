@@ -32,9 +32,9 @@ body {
   user-select: none;
 }
 .nota .nota-label {
-  font-size: 1.3rem; /* Ajuste o tamanho da fonte conforme necessário */
+  font-size: 1.65rem; /* Ajuste o tamanho da fonte conforme necessário */
   position: absolute;
-  top: -1.2rem; /* Ajuste a distância conforme necessário */
+  top: -1.35rem; /* Ajuste a distância conforme necessário */
   left: 50%;
   transform: translateX(-50%);
   color: var(--bs-blue); /* Altere a cor da nota se necessário */
