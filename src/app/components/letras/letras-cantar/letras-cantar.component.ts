@@ -1,4 +1,4 @@
-import { Component, Renderer2, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, Renderer2, ViewChildren, QueryList, ElementRef, OnDestroy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from '../../../services/supabase.service';
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './letras-cantar.component.html',
   styleUrls: ['./letras-cantar.component.css'],
 })
-export class LetrasCantarComponent {
+export class LetrasCantarComponent implements OnDestroy {
   tons: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
   mapaTons: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 
@@ -25,21 +25,20 @@ export class LetrasCantarComponent {
   tomSelecionado: string = '';
   tomDoLouvor: string = '';
   conferido: boolean = false;
-
   mostrarNotas: boolean = true;
-
   id: string = '';
   Letras: LetraModel[] = [];
   LetrasOriginal: LetraModel[] = [];
   Apresentacao: string[] = [];
-
   fontSize: number = 1;
-  scrollInterval: any;
-  scrollSpeed: number = 70;
-  scrollStep: number = 1;
-  isScrolling: boolean = false;
-
   nomeDoLouvor: string = '';
+  nomeDoCantor: string = '';
+
+  // --- Propriedades de Scroll ---
+  scrollStep: number = 2;
+  scrollIntervalTime: number = 60;
+  scrollInterval: any = null; // ID do intervalo de scroll. Inicializado como null.
+  isScrolling: boolean = false; // Indica se o scroll está ativo
 
   constructor(private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2, private cdr: ChangeDetectorRef) {
     this.route.paramMap.subscribe((params) => {
@@ -59,17 +58,24 @@ export class LetrasCantarComponent {
     localStorage.setItem('fontSizeLS', this.fontSize.toString());
   }
 
+  ngOnDestroy(): void {
+    // Garante que o scroll para quando o componente é destruído
+    console.log('ngOnDestroy: Componente sendo destruído. Tentando parar o scroll.');
+    this.stopScroll();
+  }
+
   async carregaLetra() {
     if (this.id) {
       const response = await this.supabaseService.getLetrasByLouvorId(this.id);
       if (response) {
-        this.LetrasOriginal = JSON.parse(JSON.stringify(response)); // cópia original imutável
-        this.Letras = JSON.parse(JSON.stringify(response)); // versão que será transposta
+        this.LetrasOriginal = JSON.parse(JSON.stringify(response));
+        this.Letras = JSON.parse(JSON.stringify(response));
         this.cdr.detectChanges();
 
         const responseLouvor = await this.supabaseService.getLouvorById(this.id);
         if (responseLouvor) {
           this.nomeDoLouvor = responseLouvor.nome;
+          this.nomeDoCantor = responseLouvor.cantor;
           this.tomOriginal = responseLouvor.tom;
           this.tomSelecionado = responseLouvor.tom;
           this.tomDoLouvor = responseLouvor.tom;
@@ -94,6 +100,11 @@ export class LetrasCantarComponent {
     this.tomDoLouvor = this.tomSelecionado;
   }
 
+  handleScreenClick(event: MouseEvent) {
+    console.log('handleScreenClick acionado.');
+    this.toggleScroll();
+  }
+
   calcularSemitons(de: string, para: string): number {
     const from = this.mapaTons.indexOf(de);
     const to = this.mapaTons.indexOf(para);
@@ -102,12 +113,8 @@ export class LetrasCantarComponent {
 
     let diff = to - from;
 
-    // Se quiser sempre transpor para frente: (mantém como está)
-    // return (diff + 12) % 12;
-
-    // Se quiser a menor distância (positiva ou negativa):
-    if (diff > 6) diff -= 12; // Ex: C → A (9 → -3)
-    if (diff < -6) diff += 12; // Ex: A → C (-9 → 3)
+    if (diff > 6) diff -= 12;
+    if (diff < -6) diff += 12;
 
     return diff;
   }
@@ -133,10 +140,8 @@ export class LetrasCantarComponent {
   }
 
   transporAcorde(acorde: string, semitons: number): string {
-    // Caso especial para acordes sem nota base (ex: "N.C.")
     if (!acorde || !/[A-G]/.test(acorde[0])) return acorde;
 
-    // Mapeamento de enarmonias para normalização
     const enarmonias: { [key: string]: string } = {
       'B#': 'C',
       Cb: 'B',
@@ -148,7 +153,6 @@ export class LetrasCantarComponent {
       Fbb: 'D',
     };
 
-    // Expressão regular para capturar todos os componentes do acorde
     const regex = /^([A-G](?:#|b|##|bb)?)(.*)$/;
     const match = acorde.match(regex);
 
@@ -156,30 +160,24 @@ export class LetrasCantarComponent {
 
     let [_, notaBase, sufixo] = match;
 
-    // Normaliza enarmonias
     if (enarmonias[notaBase]) {
       notaBase = enarmonias[notaBase];
     }
 
-    // Encontra o índice da nota base no mapa de tons
     const indexOriginal = this.mapaTons.indexOf(notaBase);
     if (indexOriginal === -1) return acorde;
 
-    // Calcula o novo índice com tratamento para valores negativos
     let novoIndex = (indexOriginal + semitons) % 12;
     if (novoIndex < 0) novoIndex += 12;
 
-    // Obtém a nova nota base
     const novaNotaBase = this.mapaTons[novoIndex];
 
-    // Casos especiais para evitar notações como B# ou E#
     let notaFinal = novaNotaBase;
     if (novaNotaBase === 'B#' && !sufixo.includes('dim')) notaFinal = 'C';
     if (novaNotaBase === 'E#' && !sufixo.includes('dim')) notaFinal = 'F';
     if (novaNotaBase === 'Cb' && !sufixo.includes('aug')) notaFinal = 'B';
     if (novaNotaBase === 'Fb' && !sufixo.includes('aug')) notaFinal = 'E';
 
-    // Retorna o acorde transposto
     return notaFinal + sufixo;
   }
 
@@ -203,42 +201,48 @@ export class LetrasCantarComponent {
     localStorage.setItem('fontSizeLS', this.fontSize.toString());
   }
 
-  iniciarScroll() {
-    if (this.scrollInterval) return;
-    this.isScrolling = true;
-    this.scrollInterval = setInterval(() => {
-      window.scrollBy({ top: this.scrollStep, behavior: 'smooth' });
-    }, this.scrollSpeed);
+  toggleMostrarNotas() {
+    this.mostrarNotas = !this.mostrarNotas;
   }
 
-  pararScroll() {
-    this.isScrolling = false;
-    clearInterval(this.scrollInterval);
-    this.scrollInterval = null;
-  }
-
-  aumentarVelocidade() {
-    if (this.scrollSpeed > 20) this.scrollSpeed -= 20;
-    this.reiniciarScroll();
-  }
-
-  diminuirVelocidade() {
-    if (this.scrollSpeed < 1200) this.scrollSpeed += 40;
-    this.reiniciarScroll();
-  }
-
-  reiniciarScroll() {
+  // --- Métodos de Scroll Atualizados ---
+  startScroll() {
     if (this.isScrolling) {
-      this.pararScroll();
-      this.iniciarScroll();
+      console.log('startScroll: Já está rolando, não iniciando um novo intervalo.');
+      return; // Já está rolando, não faz nada
     }
+
+    this.isScrolling = true;
+    // Sempre limpa o intervalo anterior antes de iniciar um novo, por segurança
+    if (this.scrollInterval) {
+      clearInterval(this.scrollInterval);
+      console.log('startScroll: Limpando intervalo anterior antes de iniciar novo.');
+    }
+
+    this.scrollInterval = setInterval(() => {
+      window.scrollBy(0, this.scrollStep);
+    }, this.scrollIntervalTime);
+    console.log(`Scroll iniciado: ${this.scrollStep} pixels a cada ${this.scrollIntervalTime}ms. ID do intervalo: ${this.scrollInterval}`);
+  }
+
+  stopScroll() {
+    if (this.scrollInterval) {
+      clearInterval(this.scrollInterval);
+      console.log(`stopScroll: Parou o scroll. Intervalo ID ${this.scrollInterval} limpo.`);
+      this.scrollInterval = null; // Zera a referência APÓS limpar
+    } else {
+      console.log('stopScroll: Não havia intervalo ativo para parar.');
+    }
+    this.isScrolling = false;
   }
 
   toggleScroll() {
-    this.isScrolling ? this.pararScroll() : this.iniciarScroll();
-  }
-
-  toggleMostrarNotas() {
-    this.mostrarNotas = !this.mostrarNotas;
+    console.log('toggleScroll: Clicado. isScrolling ANTES:', this.isScrolling);
+    if (this.isScrolling) {
+      this.stopScroll();
+    } else {
+      this.startScroll();
+    }
+    console.log('toggleScroll: isScrolling DEPOIS:', this.isScrolling);
   }
 }
