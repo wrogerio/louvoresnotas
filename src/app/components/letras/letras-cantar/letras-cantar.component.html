@@ -3,11 +3,9 @@
     <div class="d-flex justify-content-between align-items-center no-select">
       <section>
         <section>
-          <span class="fw-bold text-secondary me-2 no-select" style="font-size: 1.5rem">Cantor:</span>
           <span (dblclick)="conferir()" class="fw-bold text-primary me-2 no-select" style="font-size: 1.5rem">{{ nomeDoCantor }}</span>
         </section>
         <section>
-          <span class="fw-bold text-secondary me-2 no-select" style="font-size: 1.5rem">Louvor:</span>
           <span (dblclick)="conferir()" class="fw-bold text-primary me-2 no-select" style="font-size: 1.5rem">{{ nomeDoLouvor }}</span>
           @if(conferido == true){
           <i class="fa-solid fa-check text-success fs-3 no-select"></i>
