@@ -35,8 +35,8 @@ export class LetrasCantarComponent implements OnDestroy {
   nomeDoCantor: string = '';
 
   // --- Propriedades de Scroll ---
-  scrollStep: number = 2;
-  scrollIntervalTime: number = 100;
+  scrollStep: number = 1;
+  scrollIntervalTime: number = 35;
   scrollInterval: any = null; // ID do intervalo de scroll. Inicializado como null.
   isScrolling: boolean = false; // Indica se o scroll está ativo
 

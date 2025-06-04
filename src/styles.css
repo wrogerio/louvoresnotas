@@ -22,19 +22,22 @@ body {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10+ */
 }
+.textoCantar {
+  color: #666 !important;
+}
 
 .nota {
   position: relative;
   display: inline-block;
   font-weight: 700;
-  color: var(--bs-black); /* Azul DodgerBlue */
+  color: var(--bs-danger); /* Azul DodgerBlue */
   cursor: default;
   user-select: none;
 }
 .nota .nota-label {
-  font-size: 1.7rem; /* Ajuste o tamanho da fonte conforme necessário */
+  font-size: 1.45rem; /* Ajuste o tamanho da fonte conforme necessário */
   position: absolute;
-  top: -1.4rem; /* Ajuste a distância conforme necessário */
+  top: -1.45rem; /* Ajuste a distância conforme necessário */
   left: 50%;
   transform: translateX(-50%);
   color: var(--bs-blue); /* Altere a cor da nota se necessário */
