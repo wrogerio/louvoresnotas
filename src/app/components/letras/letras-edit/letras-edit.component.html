@@ -10,7 +10,7 @@
         @if(mostrar_controles == true){
         <label for="letra">Letra</label>
         }
-        <textarea (dblclick)="toggoleMostrarControles()" #letraTextarea type="text" class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
+        <textarea (dblclick)="toggoleMostrarControles()" #letraTextarea class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
       </div>
     </div>
     @if(mostrar_controles == true){
