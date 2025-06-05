@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-letras-cantar',
   standalone: true,
-  imports: [CommonModule, FormsModule, FormataNotasPipe, FormataIntroducoes, QuebralinhaPipe, LimpaNotasPipe],
+  imports: [CommonModule, FormsModule, FormataNotasPipe, FormataIntroducoes, QuebralinhaPipe],
   templateUrl: './letras-cantar.component.html',
   styleUrls: ['./letras-cantar.component.css'],
 })
