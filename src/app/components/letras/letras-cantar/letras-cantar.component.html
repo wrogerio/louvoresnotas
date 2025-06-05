@@ -38,11 +38,19 @@
             {{ item.ordem }}
           </span>
           <section class="no-select">
-            <span class="btn btn-sm btn-outline-primary me-2 no-select" (click)="diminuirFonte()">
-              <img src="./images/circle_minus.png" alt="+" class="img-fluid no-select" style="width: 1.1rem; height: 1.1rem cursor" />
+            <span class="me-3 no-select" (click)="diminuirVelocidade()">
+              <img src="./images/scrool_down.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
             </span>
-            <span class="btn btn-sm btn-outline-primary" (click)="aumentarFonte()">
-              <img src="./images/circle_plus.png" alt="+" class="img-fluid no-select" style="width: 1.1rem; height: 1.1rem cursor" />
+            <span class="" (click)="aumentarVelocidade()">
+              <img src="./images/scrool_plus.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
+            </span>
+          </section>
+          <section class="no-select">
+            <span class="me-3 no-select" (click)="diminuirFonte()">
+              <img src="./images/circle_minus.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
+            </span>
+            <span class="" (click)="aumentarFonte()">
+              <img src="./images/circle_plus.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
             </span>
           </section>
         </section>

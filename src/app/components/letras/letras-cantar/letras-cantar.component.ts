@@ -36,7 +36,7 @@ export class LetrasCantarComponent implements OnDestroy {
 
   // --- Propriedades de Scroll ---
   scrollStep: number = 1;
-  scrollIntervalTime: number = 50;
+  scrollIntervalTime: number = 70;
   scrollInterval: any = null; // ID do intervalo de scroll. Inicializado como null.
   isScrolling: boolean = false; // Indica se o scroll está ativo
 
@@ -244,5 +244,27 @@ export class LetrasCantarComponent implements OnDestroy {
       this.startScroll();
     }
     console.log('toggleScroll: isScrolling DEPOIS:', this.isScrolling);
+  }
+
+  aumentarVelocidade() {
+    if (this.scrollIntervalTime > 15) {
+      this.scrollIntervalTime -= 15; // Aumenta a velocidade diminuindo o intervalo
+      if (this.isScrolling) {
+        this.stopScroll(); // Para o scroll atual
+        this.startScroll(); // Reinicia com a nova velocidade
+      }
+      console.log(`Velocidade aumentada: ${this.scrollIntervalTime}ms por passo.`);
+    } else {
+      console.log('Velocidade já está no máximo.');
+    }
+  }
+
+  diminuirVelocidade() {
+    this.scrollIntervalTime += 15; // Diminui a velocidade aumentando o intervalo
+    if (this.isScrolling) {
+      this.stopScroll(); // Para o scroll atual
+      this.startScroll(); // Reinicia com a nova velocidade
+    }
+    console.log(`Velocidade diminuída: ${this.scrollIntervalTime}ms por passo.`);
   }
 }
