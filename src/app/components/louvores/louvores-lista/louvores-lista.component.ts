@@ -60,13 +60,6 @@ export class LouvoresListaComponent {
       return;
     }
 
-    if (frase.length < 3) {
-      // se a frase tem menos de 3 caracteres, não faz nada
-      this.listaLouvoresFiltrada = [...this.listaLouvores];
-      this.qtdLouvores = this.listaLouvoresFiltrada.length;
-      return;
-    }
-
     try {
       // chama o método que busca no Supabase pelas letras
       this.listaLouvoresFiltrada = await this.supabaseService.searchLouvoresByLyricSubstring(frase);
