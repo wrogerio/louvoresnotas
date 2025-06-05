@@ -21,4 +21,8 @@ export class HomeComponent {
       localStorage.setItem('exibir', 's');
     }
   }
+
+  recarregarHome() {
+    window.location.href = '/';
+  }
 }
