@@ -24,7 +24,7 @@
       <select id="tomSelect" class="form-select me-2 no-select" style="width: auto" [(ngModel)]="tomSelecionado" (change)="alterarTom()">
         <option *ngFor="let tom of tons" [value]="tom" [selected]="tom === tomOriginal">{{ tom }} {{ tom === tomOriginal ? "(Tom Original)" : "" }}</option>
       </select>
-      <button class="btn btn-outline-secondary me-2 no-select" (click)="resetarTom()">Voltar ao tom original</button>
+      <button class="btn btn-outline-secondary me-2 no-select" (click)="resetarTom()">Tom original</button>
     </div>
   </div>
 </div>
