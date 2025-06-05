@@ -35,7 +35,7 @@
     <li class="list-group-item mb-2 shadow-sm p-2 no-select">
       <section class="d-flex justify-content-between align-items-center rounded-1 no-select">
         <div style="line-height: 1.4rem" class="m-0 no-select">
-          <span class="{{ item.conferido == true ? 'text-primary' : 'text-danger' }} no-select d-block mb-0" style="font-size: 1.17rem; font-weight: 700">
+          <span class="{{ item.conferido == true ? 'text-primary' : 'text-danger' }} no-select d-block mb-0" style="font-size: 1.13rem; font-weight: 700">
             {{ item.nome }}
           </span>
           <span class="mt-0 mb-0 no-select" style="font-weight: 600; font-size: 1rem">{{ item.cantor }}</span>
@@ -48,7 +48,7 @@
           <span class="btn btn-sm btn-outline-primary me-2 no-select" (click)="removerLouvor(item.id)">
             <i class="fa-solid fa-trash"></i>
           </span>
-          } @if(item.url){
+          } @if(item.url && item.url.length > 5){
           <a class="btn btn-sm btn-outline-danger me-2 no-select" href="{{ item.url }}" target="_blank">
             <i class="fa-brands fa-youtube"></i>
           </a>
