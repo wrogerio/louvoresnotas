@@ -23,7 +23,7 @@ export class SupabaseService {
 
   async getLouvoresLista(verConferidos: boolean): Promise<LouvorModel[]> {
     const filtroConferido = verConferidos ? '' : '&conferido=eq.false';
-    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,conferido,url&order=created.desc&limit=90${filtroConferido}`, {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,conferido,url,ranking&order=created.desc&limit=60${filtroConferido}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -372,6 +372,25 @@ export class SupabaseService {
         Authorization: `Bearer ${this.supabaseKey}`,
       },
       body: JSON.stringify({ conferido }),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    return true;
+  }
+
+  async aumentarRanking(id: string, ranking: number): Promise<boolean> {
+    ranking += 1;
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+      body: JSON.stringify({ ranking }),
     });
 
     if (!response.ok) {

@@ -17,6 +17,7 @@ export interface LouvorModel {
   tom: string;
   url: string;
   conferido: boolean;
+  ranking: number;
 }
 
 export interface LouvorComLetrasModel extends LouvorModel {

@@ -1,19 +1,23 @@
 <div class="row mb-2 no-select">
   <div class="col-12 mx-auto no-select">
     <div class="d-flex justify-content-between align-items-center no-select">
-      <section>
+      <div>
         <section>
-          <span (dblclick)="conferir()" class="fw-bold text-primary me-2 no-select" style="font-size: 1.3rem">{{ nomeDoCantor }}</span>
+          <span (dblclick)="conferir()" class="fw-bold text-primary me-2 no-select" style="font-size: 1.2rem">{{ nomeDoCantor }}</span>
         </section>
         <section>
-          <span (dblclick)="conferir()" class="fw-bold text-primary me-2 no-select" style="font-size: 1.3rem">{{ nomeDoLouvor }}</span>
+          <span (dblclick)="conferir()" class="fw-bold text-primary me-2 no-select" style="font-size: 1.2rem">{{ nomeDoLouvor }}</span>
           @if(conferido == true){
           <i class="fa-solid fa-check text-success fs-3 no-select"></i>
           } @else {
           <i class="fa-solid fa-xmark text-danger fs-3 no-select"></i>
           }
         </section>
-      </section>
+        <section>
+          <span class="fw-bold text-primary me-2 no-select" style="font-size: 1.2rem">UTILIZADO</span>
+          <span class="fw-bold text-danger me-2 no-select" style="font-size: 1.2rem">{{ ranking | number : "1.0-0" }}X</span>
+        </section>
+      </div>
     </div>
   </div>
 </div>

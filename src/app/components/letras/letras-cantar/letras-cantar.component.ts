@@ -24,6 +24,7 @@ export class LetrasCantarComponent implements OnDestroy {
   tomOriginal: string = '';
   tomSelecionado: string = '';
   tomDoLouvor: string = '';
+  ranking: number = 0;
   conferido: boolean = false;
   mostrarNotas: boolean = true;
   id: string = '';
@@ -81,6 +82,10 @@ export class LetrasCantarComponent implements OnDestroy {
           this.tomDoLouvor = responseLouvor.tom;
           this.tomSelecionado = this.tomOriginal;
           this.conferido = responseLouvor.conferido;
+          this.ranking = responseLouvor.ranking;
+
+          await this.supabaseService.aumentarRanking(this.id, this.ranking);
+          this.ranking += 1;
         }
       } else {
         console.error('Erro ao carregar letra:', response);
