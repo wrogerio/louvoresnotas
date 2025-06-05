@@ -23,7 +23,7 @@ export class SupabaseService {
 
   async getLouvoresLista(verConferidos: boolean): Promise<LouvorModel[]> {
     const filtroConferido = verConferidos ? '' : '&conferido=eq.false';
-    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,conferido,url,ranking&order=created.desc&limit=60${filtroConferido}`, {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=id,nome,cantor,conferido,url,ranking&order=ranking.desc&limit=60${filtroConferido}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
