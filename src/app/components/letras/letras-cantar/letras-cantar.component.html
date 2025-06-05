@@ -33,24 +33,24 @@
     @for (item of Letras; track $index) {
     <div class="card mb-2 no-select">
       <div class="card-body p-3 no-select">
-        <section class="d-flex justify-content-between align-items-center mb-3 no-select">
-          <span class="no-select fw-bold text-black m-0 cursor" style="font-size: 1.2rem">
+        <section class="d-flex justify-content-between align-items-center mb-3 no-select border-bottom">
+          <span class="no-select fw-bold text-black m-0 cursor" style="font-size: 1.4rem">
             {{ item.ordem }}
           </span>
           <section class="no-select">
-            <span class="me-3 no-select" (click)="diminuirVelocidade()">
-              <img src="./images/scrool_down.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
+            <span class="me-4 no-select" (click)="diminuirVelocidade()">
+              <img src="./images/scrool_down.png" class="img-fluid no-select" style="width: 1.4rem; height: 1.4rem cursor" />
             </span>
             <span class="" (click)="aumentarVelocidade()">
-              <img src="./images/scrool_plus.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
+              <img src="./images/scrool_plus.png" class="img-fluid no-select" style="width: 1.4rem; height: 1.4rem cursor" />
             </span>
           </section>
           <section class="no-select">
-            <span class="me-3 no-select" (click)="diminuirFonte()">
-              <img src="./images/circle_minus.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
+            <span class="me-4 no-select" (click)="diminuirFonte()">
+              <img src="./images/circle_minus.png" class="img-fluid no-select" style="width: 1.4rem; height: 1.4rem cursor" />
             </span>
             <span class="" (click)="aumentarFonte()">
-              <img src="./images/circle_plus.png" class="img-fluid no-select" style="width: 1.3rem; height: 1.3rem cursor" />
+              <img src="./images/circle_plus.png" class="img-fluid no-select" style="width: 1.4rem; height: 1.4rem cursor" />
             </span>
           </section>
         </section>
