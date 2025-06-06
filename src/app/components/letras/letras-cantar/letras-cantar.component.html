@@ -58,7 +58,7 @@
             </span>
           </section>
         </section>
-        <div (click)="handleScreenClick($event)" style="text-align: justify; font-size: 1.9rem; font-weight: 500; line-height: 3.5rem" class="textoCantar no-select mb-1" [innerHTML]="item.letra | quebralinha | formataNotas" [style.font-size]="fontSize + 'em'"></div>
+        <div (click)="handleScreenClick($event)" style="text-align: justify; font-size: 1.9rem; font-weight: 500; line-height: 3rem" class="textoCantar no-select mb-1" [innerHTML]="item.letra | quebralinha | formataNotas" [style.font-size]="fontSize + 'em'"></div>
         @if(item.notas.length > 0) {
         <div class="d-flex justify-content-between align-items-center mb-1 no-select">
           <span class="no-select fw-bold text-primary p-0 m-0" [style.font-size]="fontSize + 'em'" [innerHTML]="item.notas | formataIntro"></span>
