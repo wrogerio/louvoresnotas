@@ -382,8 +382,10 @@ export class SupabaseService {
     return true;
   }
 
-  async aumentarRanking(id: string, ranking: number): Promise<boolean> {
-    ranking += 1;
+  async aumentarRanking(id: string, ranking: number, conferido: boolean = false): Promise<boolean> {
+    if (conferido === true) {
+      ranking += 1;
+    }
     const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?id=eq.${id}`, {
       method: 'PATCH',
       headers: {

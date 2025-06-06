@@ -84,7 +84,7 @@ export class LetrasCantarComponent implements OnDestroy {
           this.conferido = responseLouvor.conferido;
           this.ranking = responseLouvor.ranking;
 
-          await this.supabaseService.aumentarRanking(this.id, this.ranking);
+          await this.supabaseService.aumentarRanking(this.id, this.ranking, this.conferido);
           this.ranking += 1;
         }
       } else {
