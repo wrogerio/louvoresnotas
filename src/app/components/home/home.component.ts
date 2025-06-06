@@ -23,6 +23,6 @@ export class HomeComponent {
   }
 
   recarregarHome() {
-    window.location.href = '/';
+    window.location.href = 'https://wrogerio.github.io/louvoresnotas/';
   }
 }
