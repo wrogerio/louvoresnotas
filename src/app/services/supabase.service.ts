@@ -400,4 +400,35 @@ export class SupabaseService {
 
     return true;
   }
+
+  async resetarRanking(id: string, todosRegistros: boolean): Promise<boolean> {
+    let url = `${this.supabaseUrl}/rest/v1/TbLouvores`;
+    var ranking = 0;
+
+    // Aplica filtro por ID somente se for para resetar apenas um registro
+    if (!todosRegistros) {
+      url += `?id=eq.${id}`;
+    } else {
+      url += '?ranking=gt.0';
+    }
+
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+      body: JSON.stringify({ ranking }),
+    });
+
+    console.log(response);
+
+    if (!response.ok) {
+      console.error(`Erro ao resetar ranking: ${response.statusText}`);
+      return false;
+    }
+
+    return true;
+  }
 }

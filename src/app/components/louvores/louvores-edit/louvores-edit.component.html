@@ -61,6 +61,14 @@
     <i class="fa-solid fa-arrows-rotate me-2"></i>
     Reordenar
   </span>
+  <span accesskey="r" class="btn btn-outline-danger me-2" (click)="resetarRanking()">
+    <i class="fa-solid fa-redo-alt me-2"></i>
+    Resetar Solo
+  </span>
+  <span accesskey="r" class="btn btn-outline-danger me-2" (click)="resetarRanking(true)">
+    <i class="fa-solid fa-redo-alt me-2"></i>
+    Resetar Todos
+  </span>
   <a accesskey="v" [routerLink]="['/']" class="btn btn-outline-success">
     <i class="fa-solid fa-home me-2"></i>
     Voltar

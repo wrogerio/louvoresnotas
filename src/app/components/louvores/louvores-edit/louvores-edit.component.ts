@@ -139,4 +139,8 @@ export class LouvoresEditComponent {
   toggleMostrarNotas() {
     this.mostrarNotas = !this.mostrarNotas;
   }
+
+  async resetarRanking(todos: boolean = false) {
+    await this.supabaseService.resetarRanking(this.id, todos);
+  }
 }
