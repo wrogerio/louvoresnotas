@@ -50,4 +50,21 @@ export class LouvoresAddComponent {
       }
     }
   }
+
+  completar() {
+    var novoValor = '';
+
+    if (this.form.value.cantor === 'hc') {
+      novoValor = 'Harpa Cristã';
+    }
+
+    this.form.patchValue({
+      nome: this.form.value.nome.trim(),
+      cantor: novoValor,
+      inicio: this.form.value.inicio.trim(),
+      grupo: this.form.value.grupo.trim(),
+      tom: this.form.value.tom.trim(),
+      url: this.form.value.url.trim(),
+    });
+  }
 }

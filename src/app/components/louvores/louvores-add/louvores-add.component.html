@@ -9,7 +9,7 @@
     <div class="col-12 col-md-5">
       <div class="form-group">
         <label for="cantor">Cantor</label>
-        <input type="text" class="form-control fw-medium" id="cantor" formControlName="cantor" placeholder="Cantor" />
+        <input type="text" class="form-control fw-medium" id="cantor" formControlName="cantor" (keyup.enter)="completar()" placeholder="Cantor" />
       </div>
     </div>
     <div class="col-8">
