@@ -154,6 +154,26 @@ export class SupabaseService {
     return data[0] as LetraModel;
   }
 
+  async getTomDoLouvor(louvorId: string): Promise<string> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLouvores?select=tom&id=eq.${louvorId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao buscar tom do louvor');
+    }
+
+    const data = await response.json();
+    return data[0]?.tom ?? '';
+  }
+
   async addLetra(letra: LetraModel): Promise<string> {
     const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras`, {
       method: 'POST',
@@ -423,8 +443,6 @@ export class SupabaseService {
       },
       body: JSON.stringify({ ranking }),
     });
-
-    console.log(response);
 
     if (!response.ok) {
       console.error(`Erro ao resetar ranking: ${response.statusText}`);

@@ -16,6 +16,21 @@ export class LetrasEditComponent {
   form: FormGroup;
   ligar_atalhos: boolean = true;
   mostrar_controles: boolean = true;
+  campoHarmonico = [
+    { Tom: 'C', Acordes: ['C', 'Dm', 'Em', 'F', 'G', 'Am', 'Bdim'] },
+    { Tom: 'Db', Acordes: ['Db', 'Ebm', 'Fm', 'Gb', 'Ab', 'Bbm', 'Cdim'] },
+    { Tom: 'D', Acordes: ['D', 'Em', 'F#m', 'G', 'A', 'Bm', 'C#dim'] },
+    { Tom: 'Eb', Acordes: ['Eb', 'Fm', 'Gm', 'Ab', 'Bb', 'Cm', 'Ddim'] },
+    { Tom: 'E', Acordes: ['E', 'F#m', 'G#m', 'A', 'B', 'C#m', 'D#dim'] },
+    { Tom: 'F', Acordes: ['F', 'Gm', 'Am', 'Bb', 'C', 'Dm', 'Edim'] },
+    { Tom: 'F#', Acordes: ['F#', 'G#m', 'A#m', 'B', 'C#', 'D#m', 'E#dim'] },
+    { Tom: 'G', Acordes: ['G', 'Am', 'Bm', 'C', 'D', 'Em', 'F#dim'] },
+    { Tom: 'Ab', Acordes: ['Ab', 'Bbm', 'Cm', 'Db', 'Eb', 'Fm', 'Gdim'] },
+    { Tom: 'A', Acordes: ['A', 'Bm', 'C#m', 'D', 'E', 'F#m', 'G#dim'] },
+    { Tom: 'Bb', Acordes: ['Bb', 'Cm', 'Dm', 'Eb', 'F', 'Gm', 'Adim'] },
+    { Tom: 'B', Acordes: ['B', 'C#m', 'D#m', 'E', 'F#', 'G#m', 'A#dim'] },
+  ];
+  tomAtual: string = ''; // Tom padrão, pode ser alterado conforme necessário
 
   constructor(private fb: FormBuilder, private supabaseService: SupabaseService, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -72,6 +87,13 @@ export class LetrasEditComponent {
           notas: response.notas,
           is_intro: response.is_intro,
         });
+
+        const responseTomDoLouvor = await this.supabaseService.getTomDoLouvor(this.louvor_id);
+        if (responseTomDoLouvor) {
+          this.tomAtual = responseTomDoLouvor || 'ZERO';
+        } else {
+          console.error('Error loading tom do louvor:', responseTomDoLouvor);
+        }
       } else {
         console.error('Error loading letra:', response);
       }
@@ -82,8 +104,7 @@ export class LetrasEditComponent {
     this.ligar_atalhos = !this.ligar_atalhos;
   }
 
-  toggoleMostrarControles() {
-    debugger;
+  toggleMostrarControles() {
     this.mostrar_controles = !this.mostrar_controles;
   }
 
@@ -105,8 +126,9 @@ export class LetrasEditComponent {
       if (event.key === '+') {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
+          const novaNota = this.getNotaCampoHarmonico(this.tomAtual, nota.trim()) || nota.trim();
           const currentChar = content.charAt(cursorPos) || '';
-          insercao = `{${currentChar}|${nota.trim()}}`;
+          insercao = `{${currentChar}|${novaNota.trim()}}`;
           novaPosicaoCursor = cursorPos + insercao.length;
           ignorarProximoChar = currentChar ? 1 : 0;
         } else {
@@ -115,7 +137,8 @@ export class LetrasEditComponent {
       } else if (event.key === '-') {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
-          insercao = ` ....{.|${nota.trim()}}.... `;
+          const novaNota = this.getNotaCampoHarmonico(this.tomAtual, nota.trim()) || nota.trim();
+          insercao = ` ....{.|${novaNota.trim()}}.... `;
           const posRelativaFechamento = insercao.indexOf('}') + 5;
           novaPosicaoCursor = cursorPos + posRelativaFechamento;
         } else {
@@ -131,7 +154,8 @@ export class LetrasEditComponent {
       } else if (event.key === '/') {
         const nota = prompt('Digite a nota musical:');
         if (nota !== null && nota.trim() !== '') {
-          insercao = ` | ....{.|${nota.trim()}}.... `;
+          const novaNota = this.getNotaCampoHarmonico(this.tomAtual, nota.trim()) || nota.trim();
+          insercao = ` | ....{.|${novaNota.trim()}}.... `;
           const posRelativaFechamento = insercao.indexOf('}') + 6;
           novaPosicaoCursor = cursorPos + posRelativaFechamento;
         } else {
@@ -156,5 +180,14 @@ export class LetrasEditComponent {
         textarea.focus();
       }, 400);
     }
+  }
+
+  getNotaCampoHarmonico(tom: string, entrada: string): string | null {
+    const campo = this.campoHarmonico.find((c) => c.Tom.toLowerCase() === tom.toLowerCase());
+    if (!campo) return null;
+
+    const entradaUpper = entrada.toUpperCase();
+    const nota = campo.Acordes.find((acorde) => acorde.toUpperCase().startsWith(entradaUpper));
+    return nota || null;
   }
 }

@@ -61,7 +61,6 @@ export class LetrasCantarComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     // Garante que o scroll para quando o componente é destruído
-    console.log('ngOnDestroy: Componente sendo destruído. Tentando parar o scroll.');
     this.stopScroll();
   }
 
@@ -95,7 +94,6 @@ export class LetrasCantarComponent implements OnDestroy {
 
   alterarTom() {
     const diff = this.calcularSemitons(this.tomOriginal, this.tomSelecionado);
-    console.log('[ALTERAR TOM] Transpondo de', this.tomOriginal, 'para', this.tomSelecionado, `(${diff} semitons)`);
 
     this.Letras = this.LetrasOriginal.map((item) => ({
       ...item,
@@ -106,7 +104,6 @@ export class LetrasCantarComponent implements OnDestroy {
   }
 
   handleScreenClick(event: MouseEvent) {
-    console.log('handleScreenClick acionado.');
     this.toggleScroll();
   }
 
@@ -213,7 +210,6 @@ export class LetrasCantarComponent implements OnDestroy {
   // --- Métodos de Scroll Atualizados ---
   startScroll() {
     if (this.isScrolling) {
-      console.log('startScroll: Já está rolando, não iniciando um novo intervalo.');
       return; // Já está rolando, não faz nada
     }
 
@@ -221,34 +217,28 @@ export class LetrasCantarComponent implements OnDestroy {
     // Sempre limpa o intervalo anterior antes de iniciar um novo, por segurança
     if (this.scrollInterval) {
       clearInterval(this.scrollInterval);
-      console.log('startScroll: Limpando intervalo anterior antes de iniciar novo.');
     }
 
     this.scrollInterval = setInterval(() => {
       window.scrollBy(0, this.scrollStep);
     }, this.scrollIntervalTime);
-    console.log(`Scroll iniciado: ${this.scrollStep} pixels a cada ${this.scrollIntervalTime}ms. ID do intervalo: ${this.scrollInterval}`);
   }
 
   stopScroll() {
     if (this.scrollInterval) {
       clearInterval(this.scrollInterval);
-      console.log(`stopScroll: Parou o scroll. Intervalo ID ${this.scrollInterval} limpo.`);
       this.scrollInterval = null; // Zera a referência APÓS limpar
     } else {
-      console.log('stopScroll: Não havia intervalo ativo para parar.');
     }
     this.isScrolling = false;
   }
 
   toggleScroll() {
-    console.log('toggleScroll: Clicado. isScrolling ANTES:', this.isScrolling);
     if (this.isScrolling) {
       this.stopScroll();
     } else {
       this.startScroll();
     }
-    console.log('toggleScroll: isScrolling DEPOIS:', this.isScrolling);
   }
 
   aumentarVelocidade() {
@@ -258,7 +248,6 @@ export class LetrasCantarComponent implements OnDestroy {
         this.stopScroll(); // Para o scroll atual
         this.startScroll(); // Reinicia com a nova velocidade
       }
-      console.log(`Velocidade aumentada: ${this.scrollIntervalTime}ms por passo.`);
     } else {
       console.log('Velocidade já está no máximo.');
     }
@@ -270,6 +259,5 @@ export class LetrasCantarComponent implements OnDestroy {
       this.stopScroll(); // Para o scroll atual
       this.startScroll(); // Reinicia com a nova velocidade
     }
-    console.log(`Velocidade diminuída: ${this.scrollIntervalTime}ms por passo.`);
   }
 }
