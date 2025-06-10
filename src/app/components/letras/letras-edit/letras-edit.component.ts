@@ -15,6 +15,7 @@ export class LetrasEditComponent {
   louvor_id: string = '';
   form: FormGroup;
   ligar_atalhos: boolean = true;
+  ligar_teclado_inteligente: boolean = false;
   mostrar_controles: boolean = true;
   campoHarmonico = [
     { Tom: 'C', Acordes: ['C', 'Dm', 'Em', 'F', 'G', 'Am', 'Bdim'] },
@@ -182,6 +183,50 @@ export class LetrasEditComponent {
     }
   }
 
+  onKeyUp(event: KeyboardEvent, textarea: HTMLTextAreaElement) {
+    if (!this.ligar_teclado_inteligente) return;
+
+    const key = event.key;
+
+    if (key.length === 1 && key.match(/[a-zA-Z]/)) {
+      const cursorPos = textarea.selectionStart;
+      const content = textarea.value;
+
+      // A letra digitada está antes do cursor (cursor já avançou no keyup)
+      // Então a letra digitada está na posição cursorPos - 1
+      const posLetraDigitada = cursorPos - 1;
+
+      // Letra que estava no cursor antes da letra digitada (que agora está depois da posição cursor)
+      const letraDepois = content.charAt(cursorPos);
+
+      const notaMusical = this.getNotaCampoHarmonico(this.tomAtual, key) || key;
+
+      // Texto antes da letra digitada
+      const antes = content.substring(0, posLetraDigitada);
+      // Texto depois da letra depois (pulando letraDepois)
+      const depois = content.substring(cursorPos + 1);
+
+      // Construir o novo texto sem a letra digitada e sem a letraDepois fora da inserção
+      const novoTexto = antes + `{${letraDepois}|${notaMusical}}` + depois;
+
+      textarea.value = novoTexto;
+
+      const formControlName = textarea.getAttribute('formControlName');
+      if (formControlName && this.form.get(formControlName)) {
+        this.form.get(formControlName)?.setValue(novoTexto);
+      }
+
+      // Posiciona cursor logo após a inserção
+      const novaPosicaoCursor = antes.length + `{${letraDepois}|${notaMusical}}`.length;
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
+        textarea.focus();
+      }, 0);
+
+      this.onSubmit();
+    }
+  }
+
   getNotaCampoHarmonico(tom: string, entrada: string): string | null {
     const campo = this.campoHarmonico.find((c) => c.Tom.toLowerCase() === tom.toLowerCase());
     if (!campo) return null;
@@ -189,5 +234,9 @@ export class LetrasEditComponent {
     const entradaUpper = entrada.toUpperCase();
     const nota = campo.Acordes.find((acorde) => acorde.toUpperCase().startsWith(entradaUpper));
     return nota || null;
+  }
+
+  toggleLigarTecladoInteligente() {
+    this.ligar_teclado_inteligente = !this.ligar_teclado_inteligente;
   }
 }

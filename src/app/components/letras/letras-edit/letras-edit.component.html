@@ -10,7 +10,7 @@
         @if(mostrar_controles == true){
         <label for="letra">Letra</label>
         }
-        <textarea (dblclick)="toggleMostrarControles()" #letraTextarea class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
+        <textarea (dblclick)="toggleMostrarControles()" #letraTextarea class="form-control fw-medium" id="letra" formControlName="letra" rows="5" (keyup)="onKeyUp($event, letraTextarea)" (keydown)="onKeyDown($event, letraTextarea)"></textarea>
       </div>
     </div>
     @if(mostrar_controles == true){
@@ -46,10 +46,15 @@
     <i class="fa-solid fa-home me-2"></i>
     Voltar
   </a>
-  <span accesskey="d" class="btn btn-outline-danger" (click)="toogleLigarAtalhos()">
+  <span accesskey="a" class="btn btn-outline-danger me-2" (click)="toogleLigarAtalhos()">
     @if(ligar_atalhos == true){ Desligar Atalhos } @else {
     <i class="fa-solid fa-keyboard me-2"></i>
     Ligar Atalhos }
+  </span>
+  <span accesskey="t" class="btn btn-outline-info" (click)="toggleLigarTecladoInteligente()">
+    @if(ligar_teclado_inteligente == true){ Desligar Teclado Inteligente } @else {
+    <i class="fa-solid fa-keyboard me-2"></i>
+    Ligar Teclado Inteligente }
   </span>
   }
 </form>
