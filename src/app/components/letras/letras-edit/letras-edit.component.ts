@@ -186,6 +186,11 @@ export class LetrasEditComponent {
   onKeyUp(event: KeyboardEvent, textarea: HTMLTextAreaElement) {
     if (!this.ligar_teclado_inteligente) return;
 
+    if (!event.key || event.key.length !== 1) return;
+
+    // se letra for t ou T, não faz nada
+    if (event.key.toLowerCase() === 't') return;
+
     const key = event.key;
 
     if (key.length === 1 && key.match(/[a-zA-Z]/)) {

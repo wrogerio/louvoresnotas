@@ -59,12 +59,12 @@ export class LouvoresAddComponent {
     }
 
     this.form.patchValue({
-      nome: this.form.value.nome.trim(),
+      nome: this.form.value.nome.trim().replace(/-/gi, '').replace(/  /gi, ' '),
       cantor: novoValor,
       inicio: this.form.value.inicio.trim(),
-      grupo: this.form.value.grupo.trim(),
+      grupo: 'Harpa',
       tom: this.form.value.tom.trim(),
-      url: this.form.value.url.trim(),
+      url: '.',
     });
   }
 }
