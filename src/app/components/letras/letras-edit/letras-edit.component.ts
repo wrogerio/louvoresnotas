@@ -188,6 +188,9 @@ export class LetrasEditComponent {
 
     if (!event.key || event.key.length !== 1) return;
 
+    // se a tecla nao for uma letra de a a z minuscula nao faz nada
+    if (!event.key.match(/[a-z]/)) return;
+
     // se letra for t ou T, não faz nada
     if (event.key.toLowerCase() === 't') return;
 
