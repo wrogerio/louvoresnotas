@@ -15,7 +15,7 @@ export class LetrasEditComponent {
   louvor_id: string = '';
   form: FormGroup;
   ligar_atalhos: boolean = true;
-  ligar_teclado_inteligente: boolean = false;
+  ligar_teclado_inteligente: boolean = true;
   mostrar_controles: boolean = true;
   campoHarmonico = [
     { Tom: 'C', Acordes: ['C', 'Dm', 'Em', 'F', 'G', 'Am', 'Bdim'] },
