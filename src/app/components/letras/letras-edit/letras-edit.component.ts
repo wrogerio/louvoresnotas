@@ -110,6 +110,7 @@ export class LetrasEditComponent {
   }
 
   onKeyDown(event: KeyboardEvent, textarea: HTMLTextAreaElement): void {
+    let pararPosicionamento = false;
     if (!this.ligar_atalhos) {
       return;
     }
@@ -117,7 +118,7 @@ export class LetrasEditComponent {
     const cursorPos = textarea.selectionStart;
     const content = textarea.value;
 
-    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.key === '4' || event.key === '6') {
       event.preventDefault();
 
       let insercao = '';
@@ -162,6 +163,25 @@ export class LetrasEditComponent {
         } else {
           return;
         }
+      } else if (event.key === '6') {
+        this.goToNext();
+        textarea.focus();
+        event.preventDefault();
+        setTimeout(() => {
+          textarea.selectionStart = textarea.selectionEnd = 0;
+          textarea.focus();
+          pararPosicionamento = true;
+        }, 400);
+        return;
+      } else if (event.key === '4') {
+        this.goToPrev();
+        event.preventDefault();
+        setTimeout(() => {
+          textarea.selectionStart = textarea.selectionEnd = 0;
+          textarea.focus();
+          pararPosicionamento = true;
+        }, 400);
+        return;
       }
 
       const novoTexto = content.substring(0, cursorPos) + insercao + content.substring(cursorPos + ignorarProximoChar);
@@ -176,6 +196,7 @@ export class LetrasEditComponent {
       // Reposiciona o cursor após a inserção
       this.onSubmit();
 
+      if (pararPosicionamento) return;
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = novaPosicaoCursor;
         textarea.focus();
@@ -188,10 +209,8 @@ export class LetrasEditComponent {
 
     if (!event.key || event.key.length !== 1) return;
 
-    // se a tecla nao for uma letra de a a z minuscula nao faz nada
-    if (!event.key.match(/[a-z]/)) return;
+    if (!event.key.match(/[a-z4-6]/)) return;
 
-    // se letra for t ou T, não faz nada
     if (event.key.toLowerCase() === 't') return;
 
     const key = event.key;
@@ -246,5 +265,56 @@ export class LetrasEditComponent {
 
   toggleLigarTecladoInteligente() {
     this.ligar_teclado_inteligente = !this.ligar_teclado_inteligente;
+  }
+
+  async goToPrev() {
+    const ordemAtual = this.form.value.ordem;
+    const ordemAnterior = ordemAtual - 1;
+
+    const letraAnterior = await this.supabaseService.getLetraByLouvorIdAndOrdem(this.louvor_id, ordemAnterior);
+
+    if (letraAnterior) {
+      this.form.patchValue({
+        louvor_id: this.louvor_id,
+        id: this.id,
+        ordem: letraAnterior.ordem,
+        letra: letraAnterior.letra,
+        notas: letraAnterior.notas,
+        is_intro: letraAnterior.is_intro,
+      });
+      const responseTomDoLouvor = await this.supabaseService.getTomDoLouvor(this.louvor_id);
+      if (responseTomDoLouvor) {
+        this.tomAtual = responseTomDoLouvor || 'ZERO';
+      } else {
+        console.error('Error loading tom do louvor:', responseTomDoLouvor);
+      }
+    } else {
+      console.log('Não há letra anterior.');
+    }
+  }
+
+  async goToNext() {
+    const ordemAtual = this.form.value.ordem;
+    const proximaOrdem = ordemAtual + 1;
+
+    const proximaLetra = await this.supabaseService.getLetraByLouvorIdAndOrdem(this.louvor_id, proximaOrdem);
+    if (proximaLetra) {
+      this.form.patchValue({
+        louvor_id: this.louvor_id,
+        id: this.id,
+        ordem: proximaLetra.ordem,
+        letra: proximaLetra.letra,
+        notas: proximaLetra.notas,
+        is_intro: proximaLetra.is_intro,
+      });
+      const responseTomDoLouvor = await this.supabaseService.getTomDoLouvor(this.louvor_id);
+      if (responseTomDoLouvor) {
+        this.tomAtual = responseTomDoLouvor || 'ZERO';
+      } else {
+        console.error('Error loading tom do louvor:', responseTomDoLouvor);
+      }
+    } else {
+      console.log('Não há próxima letra.');
+    }
   }
 }

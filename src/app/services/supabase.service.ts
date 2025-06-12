@@ -134,6 +134,28 @@ export class SupabaseService {
     return data as LetraModel[];
   }
 
+  async getLetraByLouvorIdAndOrdem(louvor_id: string, ordem: number): Promise<LetraModel | null> {
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?louvor_id=eq.${louvor_id}&ordem=eq.${ordem}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error('Erro ao buscar letra:', await response.text());
+      return null;
+    }
+
+    const data = await response.json();
+
+    return data.length > 0 ? (data[0] as LetraModel) : null;
+  }
+
   async getLetraById(id: string): Promise<LetraModel> {
     const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?id=eq.${id}`, {
       method: 'GET',
