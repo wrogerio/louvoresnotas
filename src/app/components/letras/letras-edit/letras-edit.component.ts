@@ -271,10 +271,10 @@ export class LetrasEditComponent {
   async goToPrev() {
     const ordemAtual = this.form.value.ordem;
     const ordemAnterior = ordemAtual - 1;
-
     const letraAnterior = await this.supabaseService.getLetraByLouvorIdAndOrdem(this.louvor_id, ordemAnterior);
 
     if (letraAnterior) {
+      this.ligar_teclado_inteligente = false;
       this.router.navigate(['/louvores', this.louvor_id, 'letras', 'edit', letraAnterior.id]);
     } else {
       console.log('Não há letra anterior.');
@@ -287,6 +287,7 @@ export class LetrasEditComponent {
 
     const proximaLetra = await this.supabaseService.getLetraByLouvorIdAndOrdem(this.louvor_id, proximaOrdem);
     if (proximaLetra) {
+      this.ligar_teclado_inteligente = false;
       this.router.navigate(['/louvores', this.louvor_id, 'letras', 'edit', proximaLetra.id]);
     } else {
       console.log('Não há próxima letra.');
