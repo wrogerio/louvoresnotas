@@ -57,12 +57,13 @@ export class LetrasEditComponent {
       const data = this.form.value as LetraModel;
       data.id = this.id;
       data.louvor_id = this.louvor_id;
+      data.ordem = data.ordem;
 
       data.letra = data.letra.trim().replace(/\n/g, ' ').replaceAll('  ', ' ');
       data.notas = data.notas.trim();
 
       try {
-        const response = await this.supabaseService.updateLetra(data);
+        const response = await this.supabaseService.updateLetraById(data);
 
         if (!response) {
           console.error('Error updating letra:', response);
@@ -274,20 +275,7 @@ export class LetrasEditComponent {
     const letraAnterior = await this.supabaseService.getLetraByLouvorIdAndOrdem(this.louvor_id, ordemAnterior);
 
     if (letraAnterior) {
-      this.form.patchValue({
-        louvor_id: this.louvor_id,
-        id: this.id,
-        ordem: letraAnterior.ordem,
-        letra: letraAnterior.letra,
-        notas: letraAnterior.notas,
-        is_intro: letraAnterior.is_intro,
-      });
-      const responseTomDoLouvor = await this.supabaseService.getTomDoLouvor(this.louvor_id);
-      if (responseTomDoLouvor) {
-        this.tomAtual = responseTomDoLouvor || 'ZERO';
-      } else {
-        console.error('Error loading tom do louvor:', responseTomDoLouvor);
-      }
+      this.router.navigate(['/louvores', this.louvor_id, 'letras', 'edit', letraAnterior.id]);
     } else {
       console.log('Não há letra anterior.');
     }
@@ -299,20 +287,7 @@ export class LetrasEditComponent {
 
     const proximaLetra = await this.supabaseService.getLetraByLouvorIdAndOrdem(this.louvor_id, proximaOrdem);
     if (proximaLetra) {
-      this.form.patchValue({
-        louvor_id: this.louvor_id,
-        id: this.id,
-        ordem: proximaLetra.ordem,
-        letra: proximaLetra.letra,
-        notas: proximaLetra.notas,
-        is_intro: proximaLetra.is_intro,
-      });
-      const responseTomDoLouvor = await this.supabaseService.getTomDoLouvor(this.louvor_id);
-      if (responseTomDoLouvor) {
-        this.tomAtual = responseTomDoLouvor || 'ZERO';
-      } else {
-        console.error('Error loading tom do louvor:', responseTomDoLouvor);
-      }
+      this.router.navigate(['/louvores', this.louvor_id, 'letras', 'edit', proximaLetra.id]);
     } else {
       console.log('Não há próxima letra.');
     }

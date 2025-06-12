@@ -217,8 +217,27 @@ export class SupabaseService {
     return data[0]?.id ?? '';
   }
 
-  async updateLetra(letra: LetraModel): Promise<boolean> {
+  async updateLetraById(letra: LetraModel): Promise<boolean> {
     const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?id=eq.${letra.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: this.supabaseKey,
+        Authorization: `Bearer ${this.supabaseKey}`,
+      },
+      body: JSON.stringify(letra),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    return true; // já será um LouvorModel
+  }
+
+  async updateLetraByLouvorIdAndOrdem(letra: LetraModel): Promise<boolean> {
+    return false;
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/TbLetras?louvor_id=eq.${letra.louvor_id}&ordem=eq.${letra.ordem}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
