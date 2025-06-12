@@ -54,7 +54,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/LouvoresNotas/",
+              "baseHref": "/",
               "budgets": [
                 {
                   "type": "initial",
