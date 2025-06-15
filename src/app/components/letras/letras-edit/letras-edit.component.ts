@@ -210,7 +210,7 @@ export class LetrasEditComponent {
 
     if (!event.key || event.key.length !== 1) return;
 
-    if (!event.key.match(/[a-z4-6]/)) return;
+    if (!event.key.match(/[a-g4-6]/)) return;
 
     if (event.key.toLowerCase() === 't') return;
 
