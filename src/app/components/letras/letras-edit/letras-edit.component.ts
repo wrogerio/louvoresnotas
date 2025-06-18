@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../../services/supabase.service';
 import { LetraModel, LouvorModel } from '../../../interfaces/models';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-letras-edit',
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './letras-edit.component.html',
   styleUrl: './letras-edit.component.css',
 })
@@ -17,6 +18,8 @@ export class LetrasEditComponent {
   ligar_atalhos: boolean = true;
   ligar_teclado_inteligente: boolean = false;
   mostrar_controles: boolean = true;
+  notasCampoHarmonico: string = '';
+  jaBusqueiCampoHarmonico: boolean = false;
   campoHarmonico = [
     { Tom: 'C', Acordes: ['C', 'Dm', 'Em', 'F', 'G', 'Am', 'Bdim'] },
     { Tom: 'Db', Acordes: ['Db', 'Ebm', 'Fm', 'Gb', 'Ab', 'Bbm', 'Cdim'] },
@@ -93,6 +96,11 @@ export class LetrasEditComponent {
         const responseTomDoLouvor = await this.supabaseService.getTomDoLouvor(this.louvor_id);
         if (responseTomDoLouvor) {
           this.tomAtual = responseTomDoLouvor || 'ZERO';
+          // agora que ja sabe o tom, salvar as notas do campo harmonico no local
+          if (!this.jaBusqueiCampoHarmonico) {
+            this.notasCampoHarmonico = this.campoHarmonico.find((c) => c.Tom.toLowerCase() === this.tomAtual.toLowerCase())?.Acordes.join(', ') || '';
+          }
+          this.jaBusqueiCampoHarmonico = true;
         } else {
           console.error('Error loading tom do louvor:', responseTomDoLouvor);
         }
@@ -256,12 +264,22 @@ export class LetrasEditComponent {
   }
 
   getNotaCampoHarmonico(tom: string, entrada: string): string | null {
-    const campo = this.campoHarmonico.find((c) => c.Tom.toLowerCase() === tom.toLowerCase());
-    if (!campo) return null;
+    // const campo = this.campoHarmonico.find((c) => c.Tom.toLowerCase() === tom.toLowerCase());
+    // if (!campo) return null;
+    // const entradaUpper = entrada.toUpperCase();
+    // const nota = campo.Acordes.find((acorde) => acorde.toUpperCase().startsWith(entradaUpper));
+    // return nota || null;
 
-    const entradaUpper = entrada.toUpperCase();
-    const nota = campo.Acordes.find((acorde) => acorde.toUpperCase().startsWith(entradaUpper));
-    return nota || null;
+    // buscar as notas do campo harmonico
+    // Transforma o conteúdo do input em um array, removendo espaços
+    const notas = this.notasCampoHarmonico
+      .split(',')
+      .map((n) => n.trim())
+      .filter((n) => n); // Remove strings vazias
+
+    // Busca a primeira nota que começa com a entrada
+    const notaEncontrada = notas.find((nota) => nota.toLowerCase().startsWith(entrada.toLowerCase())) || '';
+    return notaEncontrada;
   }
 
   toggleLigarTecladoInteligente() {

@@ -1,9 +1,18 @@
+<div class="row">
+  <div class="col-12">
+    <input type="text" class="form-control" [(ngModel)]="notasCampoHarmonico" />
+  </div>
+</div>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-2">
   @if(mostrar_controles == true){
   <div class="row mb-2">
     <h4 class="m-0 text-primary">Formulário de Edição</h4>
   </div>
   }
+
+  <pre>{{ notasCampoHarmonico }}</pre>
+
   <div class="row mb-2 g-2">
     <div class="col-12">
       <div class="form-group">
