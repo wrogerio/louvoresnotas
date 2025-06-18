@@ -122,7 +122,8 @@ export class LetrasCantarComponent implements OnDestroy {
   }
 
   transporLetra(texto: string, semitons: number): string {
-    return texto.replace(/\{([^|]+)\|([A-G][b#]?m?(7|sus|dim|aug)?[^\}\s]*)\}/g, (_match, silaba, acorde) => {
+    const acordeRegex = /\{([^|]+)\|([A-G](?:#|b)?[a-zA-Z0-9#\/]*)\}/g;
+    return texto.replace(acordeRegex, (_match, silaba, acorde) => {
       const novoAcorde = this.transporAcorde(acorde, semitons);
       return `{${silaba}|${novoAcorde}}`;
     });
@@ -146,6 +147,7 @@ export class LetrasCantarComponent implements OnDestroy {
 
     const enarmonias: { [key: string]: string } = {
       'B#': 'C',
+      'F#': 'Gb',
       Cb: 'B',
       'E#': 'F',
       Fb: 'E',
