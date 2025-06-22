@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LouvorModel } from '../../../interfaces/models';
 import { SupabaseService } from '../../../services/supabase.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -13,6 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './louvores-lista.component.css',
 })
 export class LouvoresListaComponent {
+  private router = inject(Router);
+
   modoFiltro: 'grupo' | 'texto' = 'texto';
   listaLouvores: LouvorModel[] = [];
   listaLouvoresFiltrada: LouvorModel[] = [];
@@ -117,5 +119,13 @@ export class LouvoresListaComponent {
     this.verConferidos = !this.verConferidos;
 
     await this.carregarLouvores();
+  }
+
+  navigateToAdd() {
+    this.router.navigate(['/louvores/add']);
+  }
+
+  navigateToEdit(id: string) {
+    this.router.navigate(['/louvores/edit', id]);
   }
 }

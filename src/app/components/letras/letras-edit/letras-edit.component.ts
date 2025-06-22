@@ -27,7 +27,7 @@ export class LetrasEditComponent {
     { Tom: 'Eb', Acordes: ['Eb', 'Fm', 'Gm', 'Ab', 'Bb', 'Cm', 'Ddim'] },
     { Tom: 'E', Acordes: ['E', 'F#m', 'G#m', 'A', 'B', 'C#m', 'D#dim'] },
     { Tom: 'F', Acordes: ['F', 'Gm', 'Am', 'Bb', 'C', 'Dm', 'Edim'] },
-    { Tom: 'F#', Acordes: ['F#', 'G#m', 'A#m', 'B', 'C#', 'D#m', 'E#dim'] },
+    { Tom: 'Gb', Acordes: ['Gb', 'Abm', 'Bbm', 'Cb', 'Db', 'Ebm', 'Fdim'] },
     { Tom: 'G', Acordes: ['G', 'Am', 'Bm', 'C', 'D', 'Em', 'F#dim'] },
     { Tom: 'Ab', Acordes: ['Ab', 'Bbm', 'Cm', 'Db', 'Eb', 'Fm', 'Gdim'] },
     { Tom: 'A', Acordes: ['A', 'Bm', 'C#m', 'D', 'E', 'F#m', 'G#dim'] },
@@ -95,6 +95,7 @@ export class LetrasEditComponent {
 
         const responseTomDoLouvor = await this.supabaseService.getTomDoLouvor(this.louvor_id);
         if (responseTomDoLouvor) {
+          debugger;
           this.tomAtual = responseTomDoLouvor || 'ZERO';
           // agora que ja sabe o tom, salvar as notas do campo harmonico no local
           if (!this.jaBusqueiCampoHarmonico) {

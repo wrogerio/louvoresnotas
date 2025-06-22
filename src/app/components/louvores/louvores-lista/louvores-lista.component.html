@@ -2,7 +2,7 @@
   <div class="col-12 mb-2 no-select">
     @if(isEditing){
     <section class="text-end no-select">
-      <a accesskey="a" class="btn btn-outline-primary btn-sm no-select" [routerLink]="['/louvores/add']">
+      <a accesskey="a" class="btn btn-outline-primary btn-sm no-select" [routerLink]="['/louvores/add']" (click)="navigateToAdd()">
         <i class="fa-solid fa-plus"></i>
         Adicionar
       </a>
@@ -41,9 +41,9 @@
           <span class="mt-0 mb-0 no-select" style="font-weight: 600; font-size: 1rem">{{ item.cantor }}</span>
           <div class="m-0">
             @if(isEditing){
-            <span class="btn btn-sm btn-outline-primary me-2 no-select" [routerLink]="['/louvores/edit', item.id]">
+            <a class="btn btn-sm btn-outline-primary me-2 no-select" href="louvores/edit/{{ item.id }}" target="_blank">
               <i class="fa-solid fa-edit"></i>
-            </span>
+            </a>
             <span class="btn btn-sm btn-outline-primary me-2 no-select" (click)="removerLouvor(item.id)">
               <i class="fa-solid fa-trash"></i>
             </span>
@@ -52,9 +52,9 @@
               <i class="fa-brands fa-youtube"></i>
             </a>
             }
-            <span class="btn btn-sm btn-outline-primary no-select" [routerLink]="['/louvores/cantar', item.id]">
+            <a class="btn btn-sm btn-outline-primary no-select" href="louvores/cantar/{{ item.id }}" target="_blank">
               <i class="fa-solid fa-tv"></i>
-            </span>
+            </a>
           </div>
         </div>
       </div>
